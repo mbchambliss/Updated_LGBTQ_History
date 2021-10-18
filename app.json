@@ -4,11 +4,11 @@
     "slug": "Updated_LGBTQ_History",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Q.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Q.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#7AD7F0"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -26,7 +26,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/Q.png"
     }
   }
 }
