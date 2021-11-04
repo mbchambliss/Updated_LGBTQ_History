@@ -1,6 +1,6 @@
 import React from 'react';
 import { navigation } from '@react-navigation/native';
-import { View, StyleSheet, Text, SafeAreaView, Button, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput, SafeAreaView, Button, Image, TouchableOpacity, Linking } from 'react-native';
 import InfoCard from './components/infoCard';
 
 export const AboutScreen = ({ navigation }) => {
@@ -31,6 +31,134 @@ export const HomeScreen = ({ navigation }) => {
                 title="Go to About"
                 onPress={() => navigation.push('AboutScreen')}
             />
+            <Button
+                title="Go to Resources"
+                onPress={() => navigation.push('ResourceScreen')}
+            />
+        </View>
+    );
+}
+
+export const FavoritesScreen = ({ navigation }) => {
+    return (
+        <View>
+            <Text style={styles.resourceTitle}>Your Favorites</Text>
+            <InfoCard />
+        </View>
+    );
+}
+
+export const ResourceScreen = ({ navigation }) => {
+    return (
+        <SafeAreaView>
+            <View style={styles.resourceBlock}>
+                <Text style={styles.resourceTitle}>POLITICAL</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('http://www.equalityfederation.org/')}>
+                    Equality Federation</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.hrc.org/')}>
+                    Human Rights Campaign</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.thetaskforce.org/')}>
+                    National LGBTQ Task Force</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://victoryfund.org/')}>
+                    Victory Fund</Text>
+            </View>
+
+            <View style={styles.resourceBlock}>
+                <Text style={styles.resourceTitle}>YOUTH</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.glsen.org/')}>
+                    Gay, Lesbian, and Straight Education Network</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.accreditedschoolsonline.org/resources/lgbtq-student-support/')}>
+                    LGBTQ Student Resources & Support</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://gsanetwork.org/')}>
+                    GSA Network</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://pointfoundation.org/')}>
+                    Point Foundation</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('http://safeschoolscoalition.org/')}>
+                    Safe Schools Coalition</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.thetrevorproject.org/')}>
+                    The Trevor Project</Text>
+            </View>
+
+            <View style={styles.resourceBlock}>
+                <Text style={styles.resourceTitle}>BISEXUAL</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('http://www.biresource.net/')}>
+                    Bisexual Resource Center</Text>
+            </View>
+
+            <View style={styles.resourceBlock}>
+                <Text style={styles.resourceTitle}>TRANSGENDER</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://transequality.org/')}>
+                    National Center for Transgender Equality (NCTE)</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://srlp.org/')}>
+                    Sylvia Rivera Law Project</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://transgenderlawcenter.org/')}>
+                    Transgender Law Center</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.transgenderlegal.org/')}>
+                    Transgender Legal Defense & Education Fund</Text>
+            </View>
+
+            <View style={styles.resourceBlock}>
+                <Text style={styles.resourceTitle}>LEGAL</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.aclu.org/issues/lgbt-rights?redirect=lgbt-rights')}>
+                    ACLU</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.lambdalegal.org/')}>
+                    Lambda Legal</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://lgbtbar.org/')}>
+                    The LGBT Bar</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://www.nclrights.org/')}>
+                    National Center for Lesbian Rights (NCLR)</Text>
+            </View>
+
+            <View style={styles.resourceBlock}>
+                <Text style={styles.resourceTitle}>PARENTS OF</Text>
+                <Text style={styles.resourceTitle}>LGBTQ+ CHILDREN</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('https://pflag.org/')}>
+                    Parents, Families, and Friends of Lesbians & Gays (PFLAG)</Text>
+                <Text style={styles.secondaryResourceText}
+                    onPress={() => Linking.openURL('http://www.straightforequality.org/')}>
+                    Straight For Equality</Text>
+            </View>
+        </SafeAreaView>
+    );
+}
+
+export const ContactScreen = ({ navigation }) => {
+    return (
+        <View>
+            <Text style={styles.resourceTitle}>Contact Us</Text>
+            <Text style={styles.text}>Name</Text>
+            <TextInput style={styles.textInput} />
+            <Text style={styles.text}>E-mail</Text>
+            <TextInput style={styles.textInput} />
+            <Text style={styles.text}>Message</Text>
+            <TextInput style={styles.inputMessage}
+                multiline
+                numberOfLines={6}
+            />
+
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.btnText}>Submit</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -43,7 +171,7 @@ export const AccountScreen = ({ navigation }) => {
                 <Text style={styles.name}> Marsha P. Johnson</Text>
                 <TouchableOpacity
                     style={styles.opac}
-                // onPress={pressFav} 
+                    onPress={() => navigation.push('FavoritesScreen')}
                 >
                     <Text style={styles.buttonText}>Favorites</Text>
                 </TouchableOpacity>
@@ -55,7 +183,7 @@ export const AccountScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.opac}
-                // onPress={pressContact} 
+                    onPress={() => navigation.push('ContactScreen')}
                 >
                     <Text style={styles.buttonText}>Contact Us</Text>
                 </TouchableOpacity>
@@ -93,6 +221,27 @@ const styles = StyleSheet.create({
         fontSize: 15,
         textAlign: 'center',
         fontWeight: 'bold',
+    },
+    secondaryResourceText: {
+        color: '#f5f5f5',
+        fontStyle: 'italic',
+        textDecorationColor: '#7AD7F0',
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'solid',
+        textShadowRadius: 2,
+        margin: 10,
+        fontSize: 17,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    resourceBlock: {
+        backgroundColor: '#FF69B4',
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        margin: 10,
+        padding: 5,
     },
     photo: {
         height: 180,
@@ -136,5 +285,48 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingTop: '4.5%',
         fontWeight: 'bold',
+    },
+    textInput: {
+        width: '75%',
+        height: 30,
+        borderColor: '#1dacd6',
+        borderWidth: 2,
+        marginLeft: '10%',
+        marginBottom: 15,
+    },
+    inputMessage: {
+        width: '75%',
+        height: 100,
+        borderColor: '#1dacd6',
+        borderWidth: 2,
+        marginLeft: '10%',
+        marginBottom: 30,
+    },
+    text: {
+        fontSize: 18,
+        marginLeft: '10%',
+        marginBottom: '2%',
+        color: '#FF69B4',
+        fontWeight: 'bold',
+        textShadowRadius: 1,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowColor: 'black',
+    },
+    button: {
+        borderWidth: 4,
+        borderColor: '#1dacd6',
+        alignSelf: 'center',
+        backgroundColor: '#1dacd6',
+        borderRadius: 50,
+    },
+    btnText: {
+        color: 'white',
+        fontSize: 18,
+        marginVertical: 5,
+        marginHorizontal: 20,
+        fontWeight: 'bold',
+        textShadowRadius: 3,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowColor: '#FF69B4',
     },
 });

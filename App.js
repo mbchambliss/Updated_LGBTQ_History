@@ -5,7 +5,7 @@ import { navigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { HomeScreen, AboutScreen, AccountScreen } from './screens';
+import { HomeScreen, AboutScreen, AccountScreen, FavoritesScreen, ContactScreen, ResourceScreen } from './screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +37,9 @@ function App() {
         />
         <Stack.Screen name="AboutScreen" component={AboutScreen} options={{ title: "About" }} />
         <Stack.Screen name="AccountScreen" component={AccountScreen} options={{ title: "Account" }} />
+        <Stack.Screen name="FavoritesScreen" component={FavoritesScreen} options={{ title: "Favorites" }} />
+        <Stack.Screen name="ContactScreen" component={ContactScreen} options={{ title: "Contact Us" }} />
+        <Stack.Screen name="ResourceScreen" component={ResourceScreen} options={{ title: "Resources" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
