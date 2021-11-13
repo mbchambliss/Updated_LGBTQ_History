@@ -1,6 +1,6 @@
 import React from 'react';
 import { navigation } from '@react-navigation/native';
-import { View, StyleSheet, Text, TextInput, SafeAreaView, KeyboardAvoidingView, Button, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, StyleSheet, Text, TextInput, SafeAreaView, Button, Image, TouchableOpacity, Linking } from 'react-native';
 import InfoCard from './components/infoCard';
 import { Dimensions } from 'react-native';
 
