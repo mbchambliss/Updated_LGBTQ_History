@@ -1,7 +1,9 @@
 import React from 'react';
 import { navigation } from '@react-navigation/native';
-import { View, StyleSheet, Text, TextInput, SafeAreaView, Button, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, StyleSheet, Text, TextInput, SafeAreaView, ScrollView, Button, Image, TouchableOpacity, Linking } from 'react-native';
 import InfoCard from './components/infoCard';
+import styles from './stylesheets/screens_styles';
+
 
 export const AboutScreen = ({ navigation }) => {
     return (
@@ -25,7 +27,7 @@ export const AboutScreen = ({ navigation }) => {
 
 export const HomeScreen = ({ navigation }) => {
     return (
-        <View>
+        <ScrollView>
             <InfoCard />
             <Button
                 title="Go to About"
@@ -39,7 +41,7 @@ export const HomeScreen = ({ navigation }) => {
                 title="Sign In"
                 onPress={() => navigation.push('SigninScreen')}
             />
-        </View>
+        </ScrollView>
     );
 }
 
@@ -54,7 +56,7 @@ export const FavoritesScreen = ({ navigation }) => {
 
 export const ResourceScreen = ({ navigation }) => {
     return (
-        <SafeAreaView>
+        <ScrollView>
             <View style={styles.resourceBlock}>
                 <Text style={styles.resourceTitle}>POLITICAL</Text>
                 <Text style={styles.secondaryResourceText}
@@ -133,8 +135,7 @@ export const ResourceScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.resourceBlock}>
-                <Text style={styles.resourceTitle}>PARENTS OF</Text>
-                <Text style={styles.resourceTitle}>LGBTQ+ CHILDREN</Text>
+                <Text style={styles.resourceTitle}>PARENTS</Text>
                 <Text style={styles.secondaryResourceText}
                     onPress={() => Linking.openURL('https://pflag.org/')}>
                     Parents, Families, and Friends of Lesbians & Gays (PFLAG)</Text>
@@ -142,7 +143,7 @@ export const ResourceScreen = ({ navigation }) => {
                     onPress={() => Linking.openURL('http://www.straightforequality.org/')}>
                     Straight For Equality</Text>
             </View>
-        </SafeAreaView>
+        </ScrollView>
     );
 }
 
@@ -201,214 +202,77 @@ export const AccountScreen = ({ navigation }) => {
 
 export const SigninScreen = ({ navigation }) => {
     return (
-        <View>
-            <View style={{ alignItems: 'flex-start' }}>
-                <Text style={styles.feedback}>SIGN IN</Text>
-                <Text style={styles.text}>Username</Text>
-                <TextInput style={styles.textInput}
-                    name="username"
-                />
-                <Text style={styles.text}>Password</Text>
-                <TextInput style={styles.textInput} />
+        <View style={styles.flexCenter}>
+            <Text style={styles.feedback}>SIGN IN</Text>
+            <Text style={styles.text}>Username</Text>
+            <TextInput style={styles.textInput}
+                name="username"
+            />
+            <Text style={styles.text}>Password</Text>
+            <TextInput style={styles.textInput} />
 
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.btnText}>Submit</Text>
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.btnText}>Submit</Text>
+            </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.btnText}>Google Sign In</Text>
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.btnText}>Google Sign In</Text>
+            </TouchableOpacity>
 
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={styles.already}>Not a user?</Text>
-                    <Text
-                        style={styles.alreadyBtnText}
-                        onPress={() => { navigation.push('SignupScreen') }}>
-                        Sign Up
-                        </Text>
-                </View>
-
+            <View style={styles.signin}>
+                <Text style={styles.already}>Not a user?</Text>
+                <Text
+                    style={styles.alreadyBtnText}
+                    onPress={() => { navigation.push('SignupScreen') }}>
+                    Sign Up
+                </Text>
             </View>
         </View>
     )
 }
 
-const styles = StyleSheet.create({
-    already: {
-        fontSize: 16,
-        marginTop: '9%',
-        marginLeft: '24%',
-        color: '#FF69B4',
-        fontWeight: 'bold',
-        textShadowRadius: 1,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
-        alignSelf: 'center',
-    },
-    alreadyBtnText: {
-        color: '#1dacd6',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textShadowRadius: .5,
-        textShadowOffset: { width: .7, height: .7 },
-        textShadowColor: 'black',
-        marginLeft: '2%',
-        marginTop: '9%',
-        paddingLeft: 2,
-        textDecorationLine: 'underline',
-    },
-    backColor: {
-        backgroundColor: '#f6f6f6',
-        alignItems: 'center'
-    },
-    button: {
-        borderWidth: 4,
-        borderColor: '#1dacd6',
-        alignSelf: 'center',
-        backgroundColor: '#1dacd6',
-        borderRadius: 50,
-        marginTop: 20,
-    },
-    buttonText: {
-        color: '#FF69B4',
-        textShadowRadius: 1,
-        textShadowOffset: { width: 0, height: 1 },
-        textShadowColor: 'black',
-        alignSelf: 'center',
-        paddingTop: '4.5%',
-        fontWeight: 'bold',
-    },
-    btnText: {
-        color: 'white',
-        fontSize: 18,
-        marginVertical: 5,
-        marginHorizontal: 20,
-        fontWeight: 'bold',
-        textShadowRadius: 3,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: '#FF69B4',
-    },
-    feedback: {
-        alignSelf: 'center',
-        fontWeight: 'bold',
-        color: '#FF69B4',
-        fontSize: 22,
-        marginTop: '20%',
-        marginBottom: '10%',
-        textShadowRadius: 1,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
-    },
-    inputMessage: {
-        width: '75%',
-        height: 100,
-        borderColor: '#1dacd6',
-        borderWidth: 2,
-        marginLeft: '10%',
-        marginBottom: 30,
-    },
-    name: {
-        color: '#FF69B4',
-        fontWeight: 'bold',
-        fontSize: 30,
-        textAlign: 'center',
-        textShadowRadius: 2,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
-    },
-    opac: {
-        borderWidth: 2,
-        backgroundColor: 'white',
-        borderColor: '#FF69B4',
-        borderRadius: 10,
-        height: 40,
-        width: 225,
-        marginTop: 15,
-    },
-    opac_last: {
-        borderWidth: 2,
-        backgroundColor: 'white',
-        borderColor: '#FF69B4',
-        borderRadius: 10,
-        height: 40,
-        width: 225,
-        marginVertical: 15,
-    },
-    photo: {
-        height: 180,
-        width: 180,
-        marginTop: '15%',
-        marginBottom: 10,
-        borderRadius: 100,
-    },
-    resourceBlock: {
-        backgroundColor: '#FF69B4',
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        margin: 10,
-        padding: 5,
-    },
-    resourceText: {
-        color: 'black',
-        textShadowColor: '#FFB6DA',
-        textShadowOffset: { width: 5, height: 5 },
-        textShadowRadius: 50,
-        margin: 10,
-        fontSize: 15,
-        textAlign: 'center',
-        fontWeight: 'bold',
-    },
-    resourceTitle: {
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: 22,
-        textAlign: 'center',
-        textShadowColor: '#FFB6DA',
-        textShadowOffset: { width: 5, height: 3 },
-        textShadowRadius: 2,
-        marginTop: 22,
-        marginBottom: 15,
-    },
-    secondaryResourceText: {
-        color: '#f5f5f5',
-        fontStyle: 'italic',
-        textDecorationColor: '#7AD7F0',
-        textDecorationLine: 'underline',
-        textDecorationStyle: 'solid',
-        textShadowRadius: 2,
-        margin: 10,
-        fontSize: 17,
-        textAlign: 'center',
-        fontWeight: 'bold',
-    },
-    text: {
-        fontSize: 18,
-        marginLeft: '10%',
-        marginBottom: '2%',
-        color: '#FF69B4',
-        fontWeight: 'bold',
-        textShadowRadius: 1,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
-    },
-    textInput: {
-        width: '75%',
-        height: 30,
-        borderColor: '#1dacd6',
-        borderWidth: 2,
-        marginLeft: '10%',
-        marginBottom: '8%',
-    },
-    text: {
-        fontSize: 18,
-        marginLeft: '10%',
-        marginBottom: '2%',
-        color: '#FF69B4',
-        fontWeight: 'bold',
-        textShadowRadius: 1,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
-    },
-});
+export const SignupScreen = ({ navigation }) => {
+    return (
+        <View style={styles.flexCenter}>
+            <Text style={styles.feedback}>SIGN UP</Text>
+            <Text style={styles.text}>First</Text>
+            <TextInput style={styles.textInput}
+                name="first"
+            />
+            <Text style={styles.text}>Last</Text>
+            <TextInput style={styles.textInput}
+                name="last"
+            />
+            <Text style={styles.text}>Username</Text>
+            <TextInput style={styles.textInput}
+                name="username"
+            />
+            <Text style={styles.text}>Password</Text>
+            <TextInput style={styles.textInput}
+                name="password"
+            />
+
+            <Text style={styles.text}>Confirm Password</Text>
+            <TextInput style={styles.textInput}
+                name="confirmPassword"
+            />
+
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.btnText}>Submit</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.btnText}>Google Sign In</Text>
+            </TouchableOpacity>
+
+            <View style={styles.signin}>
+                <Text style={styles.already}>Already a user?</Text>
+                <Text
+                    style={styles.alreadyBtnText}
+                    onPress={() => { navigation.push('SigninScreen') }}>
+                    Sign In
+                    </Text>
+            </View>
+        </View >
+    )
+}
