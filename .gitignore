@@ -11,6 +11,7 @@ web-build/
 events.json
 firebase.js
 serviceAccount.json
+.env
 
 # macOS
 .DS_Store
