@@ -19,13 +19,14 @@ function InfoCard() {
 	}
 
 	let date = getCurrentDate();
-	const eventsCollectionRef = collection(db, "events", date, "this_day");
+	// const eventsCollectionRef = collection(db, "events", date, "this_day");
+	const eventsCollectionRef = collection(db, "test_events", "1-1", "this_day");
 
 	useEffect(() => {
 		const getEvents = async () => {
 			const data = await getDocs(eventsCollectionRef);
-			console.log(JSON.stringify(data));
-			setEvents(data.docs.map((doc) => ({ ...doc.data(), id: doc.data.id })));
+			// console.log(JSON.stringify(data));
+			setEvents(data.docs.map((doc) => ({ ...doc.data() })));
 		}
 		getEvents();
 	}, []);
