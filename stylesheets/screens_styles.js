@@ -20,7 +20,6 @@ export default StyleSheet.create({
         marginLeft: '2%',
         marginTop: '9%',
         paddingLeft: 2,
-        textDecorationLine: 'underline',
     },
     backColor: {
         backgroundColor: '#f6f6f6',
@@ -173,7 +172,9 @@ export default StyleSheet.create({
         height: 30,
         borderColor: '#1dacd6',
         borderWidth: 2,
+        borderRadius: 5,
         marginLeft: '10%',
+        paddingLeft: 5,
         marginBottom: '8%',
     },
 });

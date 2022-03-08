@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/core';
 import { navigation } from '@react-navigation/native';
-import { View, StyleSheet, Text, TextInput, SafeAreaView, ScrollView, Button, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, KeyboardAvoidingView, Text, TextInput, SafeAreaView, ScrollView, Button, Image, TouchableOpacity, Linking } from 'react-native';
 import InfoCard from './components/infoCard';
 import styles from './stylesheets/screens_styles';
-
+import { auth } from "./firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 export const AboutScreen = ({ navigation }) => {
     return (
@@ -36,10 +38,6 @@ export const HomeScreen = ({ navigation }) => {
             <Button
                 title="Go to Resources"
                 onPress={() => navigation.push('ResourceScreen')}
-            />
-            <Button
-                title="Sign In"
-                onPress={() => navigation.push('SigninScreen')}
             />
         </ScrollView>
     );
@@ -168,21 +166,33 @@ export const ContactScreen = ({ navigation }) => {
     );
 }
 
-export const AccountScreen = ({ navigation }) => {
+export const AccountScreen = () => {
+    const navigation = useNavigation();
+    const handleSignOut = () => {
+        auth
+            .signOut()
+            .then(() => {
+                navigation.replace("SigninScreen")
+            })
+            .catch(error => alert(error.message))
+    }
+
     return (
         <View style={{ display: 'flex' }}>
             <View style={{ alignItems: 'center' }}>
                 <Image style={styles.photo} source={require('./assets/marsha-cropped.jpg')} />
-                <Text style={styles.name}> Marsha P. Johnson</Text>
+                <Text style={styles.name}> {auth.currentUser?.email}</Text>
                 <TouchableOpacity
                     style={styles.opac}
                     onPress={() => navigation.push('FavoritesScreen')}
                 >
                     <Text style={styles.buttonText}>Favorites</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.opac}>
+
+                {/* <TouchableOpacity style={styles.opac}>
                     <Text style={styles.buttonText}>Edit Profile</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
                 <TouchableOpacity style={styles.opac}>
                     <Text style={styles.buttonText}>Tell A Friend About Queerstory</Text>
                 </TouchableOpacity>
@@ -192,7 +202,15 @@ export const AccountScreen = ({ navigation }) => {
                 >
                     <Text style={styles.buttonText}>Contact Us</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.opac_last}>
+                <TouchableOpacity
+                    style={styles.opac}
+                    onPress={() => navigation.push('HomeScreen')}
+                >
+                    <Text style={styles.buttonText}>Home</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.opac_last}
+                    onPress={handleSignOut}
+                >
                     <Text style={styles.buttonText}>Sign Out</Text>
                 </TouchableOpacity>
             </View>
@@ -200,34 +218,90 @@ export const AccountScreen = ({ navigation }) => {
     );
 }
 
-export const SigninScreen = ({ navigation }) => {
+export const SigninScreen = () => {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                navigation.replace("AccountScreen")
+            }
+        })
+        return unsubscribe;
+    }, [])
+
+    const handleSignUp = async () => {
+        try {
+            const user = await createUserWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    const handleLogin = async () => {
+        try {
+            const signIn = await signInWithEmailAndPassword(auth, email, password);
+            console.log(signIn);
+        } catch (error) {
+            alert(error.message)
+        };
+    }
+
     return (
-        <View style={styles.flexCenter}>
-            <Text style={styles.feedback}>SIGN IN</Text>
-            <Text style={styles.text}>Username</Text>
-            <TextInput style={styles.textInput}
-                name="username"
-            />
-            <Text style={styles.text}>Password</Text>
-            <TextInput style={styles.textInput} />
+        <KeyboardAvoidingView style={styles.flexCenter}>
+            <View>
+                <Text style={styles.feedback}>SIGN IN</Text>
 
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.btnText}>Submit</Text>
-            </TouchableOpacity>
+                <Text style={styles.text}>Email</Text>
+                <TextInput style={styles.textInput}
+                    name="email"
+                    id="email"
+                    autoCapitalize="none"
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                />
 
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.btnText}>Google Sign In</Text>
-            </TouchableOpacity>
+                <Text style={styles.text}>Password</Text>
+                <TextInput style={styles.textInput}
+                    name="password"
+                    autoCapitalize="none"
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={(text) => setPassword(text)}
+                />
 
-            <View style={styles.signin}>
-                <Text style={styles.already}>Not a user?</Text>
-                <Text
-                    style={styles.alreadyBtnText}
-                    onPress={() => { navigation.push('SignupScreen') }}>
-                    Sign Up
-                </Text>
+                <TouchableOpacity style={styles.button}
+                    onPress={handleLogin}
+                >
+                    <Text style={styles.btnText}>Log In</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button}
+                    onPress={handleSignUp}
+                >
+                    <Text style={styles.btnText}>Register</Text>
+                </TouchableOpacity>
+
+                {/* <TouchableOpacity style={styles.button}
+                    onPress={signInWithGoogle}
+                >
+                    <Text style={styles.btnText}>Google Sign In</Text>
+                </TouchableOpacity> */}
+
+                <View style={styles.signin}>
+                    <Text style={styles.already}>Not a user?</Text>
+                    <Text
+                        style={styles.alreadyBtnText}
+                        onPress={() => { navigation.push('SignupScreen') }}>
+                        Sign Up
+                    </Text>
+                </View>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -243,9 +317,9 @@ export const SignupScreen = ({ navigation }) => {
             <TextInput style={styles.textInput}
                 name="last"
             />
-            <Text style={styles.text}>Username</Text>
+            <Text style={styles.text}>Email</Text>
             <TextInput style={styles.textInput}
-                name="username"
+                name="email"
             />
             <Text style={styles.text}>Password</Text>
             <TextInput style={styles.textInput}

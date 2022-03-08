@@ -3,7 +3,7 @@
 const admin = require('./node_modules/firebase-admin');
 var serviceAccount = require("./serviceAccount.json");
 const data = require("./events.json");
-const collectionKey = "test_events";
+const collectionKey = "events";
 
 
 admin.initializeApp({
@@ -19,8 +19,7 @@ firestoreAdmin.settings(settings);
 if (data && (typeof data === "object")) {
     Object.keys(data).forEach(docKey => {
         firestoreAdmin.collection(collectionKey).doc(data[docKey]['events_id']).collection("this_day").doc(data[docKey]['id']).set(data[docKey]).then((res) => {
-            console.log("DocKey: " + docKey);
-            console.log("Document " + docKey + " written!");
+            console.log("Event: " + docKey['title'] + " added!");
         }).catch((error) => {
             console.error("Error: ", error);
         });
