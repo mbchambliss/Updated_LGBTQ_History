@@ -4,7 +4,8 @@ import { navigation } from '@react-navigation/native';
 import { View, KeyboardAvoidingView, Text, TextInput, SafeAreaView, ScrollView, Button, Image, TouchableOpacity, Linking } from 'react-native';
 import InfoCard from './components/infoCard';
 import styles from './stylesheets/screens_styles';
-import { auth, signInWithGoogle } from "./firebase";
+import { auth } from "./firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 export const AboutScreen = ({ navigation }) => {
     return (
@@ -37,10 +38,6 @@ export const HomeScreen = ({ navigation }) => {
             <Button
                 title="Go to Resources"
                 onPress={() => navigation.push('ResourceScreen')}
-            />
-            <Button
-                title="Sign In"
-                onPress={() => navigation.push('SigninScreen')}
             />
         </ScrollView>
     );
@@ -191,9 +188,11 @@ export const AccountScreen = () => {
                 >
                     <Text style={styles.buttonText}>Favorites</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.opac}>
+
+                {/* <TouchableOpacity style={styles.opac}>
                     <Text style={styles.buttonText}>Edit Profile</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
                 <TouchableOpacity style={styles.opac}>
                     <Text style={styles.buttonText}>Tell A Friend About Queerstory</Text>
                 </TouchableOpacity>
@@ -202,6 +201,12 @@ export const AccountScreen = () => {
                     onPress={() => navigation.push('ContactScreen')}
                 >
                     <Text style={styles.buttonText}>Contact Us</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.opac}
+                    onPress={() => navigation.push('HomeScreen')}
+                >
+                    <Text style={styles.buttonText}>Home</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.opac_last}
                     onPress={handleSignOut}
@@ -229,24 +234,21 @@ export const SigninScreen = () => {
         return unsubscribe;
     }, [])
 
-    const handleSignUp = () => {
-        auth
-            .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('Registered with: ', user.email);
-            })
-            .catch(error => alert(error.message))
-    }
+    const handleSignUp = async () => {
+        try {
+            const user = await createUserWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 
-    const handleLogin = () => {
-        auth
-            .signInWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('Logged in with: ', user.email);
-            })
-            .catch(error => alert(error.message))
+    const handleLogin = async () => {
+        try {
+            const signIn = await signInWithEmailAndPassword(auth, email, password);
+            console.log(signIn);
+        } catch (error) {
+            alert(error.message)
+        };
     }
 
     return (
@@ -284,11 +286,11 @@ export const SigninScreen = () => {
                     <Text style={styles.btnText}>Register</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}
+                {/* <TouchableOpacity style={styles.button}
                     onPress={signInWithGoogle}
                 >
                     <Text style={styles.btnText}>Google Sign In</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <View style={styles.signin}>
                     <Text style={styles.already}>Not a user?</Text>
