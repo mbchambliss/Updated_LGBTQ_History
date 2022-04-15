@@ -13,7 +13,8 @@ import {
   ContactScreen,
   ResourceScreen,
   SigninScreen,
-  SignupScreen
+  SignupScreen,
+  ForgotPasswordScreen
 } from './screens';
 
 
@@ -54,6 +55,7 @@ export default function App() {
         <Stack.Screen name="ContactScreen" component={ContactScreen} options={{ title: "Contact Us" }} />
         <Stack.Screen name="ResourceScreen" component={ResourceScreen} options={{ title: "Resources" }} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ title: "Sign Up" }} />
+        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ title: "Reset Password" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

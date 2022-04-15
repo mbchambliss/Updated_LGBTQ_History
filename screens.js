@@ -5,7 +5,7 @@ import { View, KeyboardAvoidingView, Text, TextInput, SafeAreaView, ScrollView, 
 import InfoCard from './components/infoCard';
 import styles from './stylesheets/screens_styles';
 import { auth } from "./firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 
 export const AboutScreen = ({ navigation }) => {
     return (
@@ -31,6 +31,11 @@ export const HomeScreen = ({ navigation }) => {
     return (
         <ScrollView>
             <InfoCard />
+
+            <Button
+                title="Show User Info"
+                onPress={() => console.log(auth.currentUser)}
+            />
             <Button
                 title="Go to About"
                 onPress={() => navigation.push('AboutScreen')}
@@ -218,17 +223,55 @@ export const AccountScreen = () => {
     );
 }
 
-export const SigninScreen = () => {
+export const ForgotPasswordScreen = () => {
+
+    const [email, setEmail] = useState("");
+
+    const handlePasswordReset = async () => {
+        try {
+            const pw = await generatePasswordResetLink(auth, email);
+            alert(pw);
+        }
+        catch {
+            console.log(error.message);
+        }
+    };
+
+    return (
+        <KeyboardAvoidingView>
+            <Text style={styles.signInTitle}>RESET PASSWORD</Text>
+
+            <View style={styles.flexCenterSignIn}>
+
+                <Text style={styles.signInText}>Email</Text>
+                <TextInput style={styles.textInput}
+                    name="email"
+                    id="email"
+                    autoCapitalize="none"
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                />
+
+                <TouchableOpacity style={styles.signInButtonLong}
+                    onPress={handlePasswordReset}
+                >
+                    <Text style={styles.btnText}>Send</Text>
+                </TouchableOpacity>
+
+            </View>
+        </KeyboardAvoidingView>
+    );
+}
+
+export const SigninScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const navigation = useNavigation();
-
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                navigation.replace("AccountScreen")
+                navigation.replace("HomeScreen")
             }
         })
         return unsubscribe;
@@ -239,69 +282,93 @@ export const SigninScreen = () => {
             const user = await createUserWithEmailAndPassword(auth, email, password);
         } catch (error) {
             console.log(error.message);
+            let message = error.message
+            if (message.includes("auth/email-already-in-use")) {
+                alert("This e-mail is already in registered with Queer History.");
+            } else if (message.includes("auth/missing-email")) {
+                alert("Please make sure to include an email.");
+            } else if (message.includes("auth/internal-error") && password.length === 0) {
+                alert("Please make sure to include a password.");
+            } else if (message.includes("auth/invalid-email") && password.length === 0) {
+                alert("Please make sure to include an email and password.");
+            } else {
+                alert("Please make sure to include an unregistered email and password.");
+            }
         }
     };
 
     const handleLogin = async () => {
         try {
             const signIn = await signInWithEmailAndPassword(auth, email, password);
-            console.log(signIn);
+            console.log(signIn.user);
         } catch (error) {
-            alert(error.message)
+            console.log(error.message);
+            let message = error.message;
+            if (message.includes("auth/internal-error") && password.length === 0) {
+                alert("Please make sure to include a password.");
+            } else if (message.includes("auth/invalid-email")) {
+                alert("Please make sure to include an email.");
+            } else {
+                alert(error.message)
+            }
         };
     }
 
     return (
-        <KeyboardAvoidingView style={styles.flexCenter}>
-            <View>
-                <Text style={styles.feedback}>SIGN IN</Text>
+        <KeyboardAvoidingView>
+            <Text style={styles.signInTitle}>SIGN IN</Text>
 
-                <Text style={styles.text}>Email</Text>
-                <TextInput style={styles.textInput}
-                    name="email"
-                    id="email"
-                    autoCapitalize="none"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                />
+            <View style={styles.flexCenterSignIn}>
 
-                <Text style={styles.text}>Password</Text>
-                <TextInput style={styles.textInput}
-                    name="password"
-                    autoCapitalize="none"
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={(text) => setPassword(text)}
-                />
+                <View style={styles.signInCenter}>
+                    <Text style={styles.signInText}>Email</Text>
+                    <TextInput style={styles.textInput}
+                        name="email"
+                        id="email"
+                        autoCapitalize="none"
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                    />
 
-                <TouchableOpacity style={styles.button}
-                    onPress={handleLogin}
-                >
-                    <Text style={styles.btnText}>Log In</Text>
-                </TouchableOpacity>
+                    <Text style={styles.signInText}>Password</Text>
+                    <TextInput style={styles.textInput}
+                        name="password"
+                        autoCapitalize="none"
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                    />
+                    <View style={styles.buttonContainerSignIn}>
+                        <TouchableOpacity style={styles.signInButton}
+                            onPress={handleLogin}
+                        >
+                            <Text style={styles.btnText}>Sign In</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}
-                    onPress={handleSignUp}
-                >
-                    <Text style={styles.btnText}>Register</Text>
-                </TouchableOpacity>
+                        <TouchableOpacity style={styles.signInButton}
+                            onPress={handleSignUp}
+                        >
+                            <Text style={styles.btnText}>Register</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity style={styles.forgotPasswordBtn}
+                            onPress={() => { navigation.push('ForgotPasswordScreen') }}
+                        >
+                            <Text style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                {/* <TouchableOpacity style={styles.button}
-                    onPress={signInWithGoogle}
-                >
-                    <Text style={styles.btnText}>Google Sign In</Text>
-                </TouchableOpacity> */}
 
-                <View style={styles.signin}>
-                    <Text style={styles.already}>Not a user?</Text>
-                    <Text
-                        style={styles.alreadyBtnText}
-                        onPress={() => { navigation.push('SignupScreen') }}>
-                        Sign Up
-                    </Text>
+                    {/* <TouchableOpacity style={styles.button}
+                        onPress={signInWithGoogle}
+                    >
+                        <Text style={styles.btnText}>Google Sign In</Text>
+                    </TouchableOpacity> */}
                 </View>
+
             </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoidingView >
     )
 }
 
