@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { navigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -13,7 +14,8 @@ import {
   ContactScreen,
   ResourceScreen,
   SigninScreen,
-  SignupScreen
+  SignupScreen,
+  ForgotPasswordScreen
 } from './screens';
 
 
@@ -31,11 +33,12 @@ export default function App() {
           options={({ navigation }) => ({
             title: "LGBTQ+ History",
             headerLeft: () => (
+
               <Icon.Button
                 name="align-justify"
-                color="#FF69B4"
-                backgroundColor="#fff"
                 onPress={() => navigation.push('AccountScreen')}
+                backgroundColor="#FFF"
+                color="#398ff4"
               />
             ),
             headerRight: () => (
@@ -54,6 +57,7 @@ export default function App() {
         <Stack.Screen name="ContactScreen" component={ContactScreen} options={{ title: "Contact Us" }} />
         <Stack.Screen name="ResourceScreen" component={ResourceScreen} options={{ title: "Resources" }} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ title: "Sign Up" }} />
+        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ title: "Reset Password" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
