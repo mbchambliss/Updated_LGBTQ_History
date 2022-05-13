@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+    about_flex: {
+        flex: 1,
+        paddingTop: '10%'
+    },
     already: {
         fontSize: 16,
         marginTop: '9%',
@@ -9,6 +13,9 @@ export default StyleSheet.create({
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 1 },
         textShadowColor: 'black',
+    },
+    first_resource: {
+        marginTop: 20,
     },
     alreadyBtnText: {
         color: '#1dacd6',
@@ -76,13 +83,24 @@ export default StyleSheet.create({
         marginRight: '10%'
     },
     buttonText: {
-        color: '#FF69B4',
+        color: '#fff',
         textShadowRadius: 1,
         textShadowOffset: { width: 0, height: 1 },
         textShadowColor: 'black',
         alignSelf: 'center',
-        paddingTop: '4.5%',
         fontWeight: 'bold',
+        fontSize: 20
+    },
+    opac: {
+        borderWidth: 0.75,
+        backgroundColor: '#f762a3',
+        borderColor: '#f4f5f0',
+        borderRadius: 20,
+        height: 40,
+        width: 225,
+        marginTop: 15,
+        display: 'flex',
+        justifyContent: 'center'
     },
     btnText: {
         color: 'white',
@@ -138,31 +156,13 @@ export default StyleSheet.create({
         marginBottom: 30,
     },
     name: {
-        color: '#FF69B4',
+        color: '#FFF',
         fontWeight: 'bold',
         fontSize: 30,
         textAlign: 'center',
         textShadowRadius: 2,
         textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
-    },
-    opac: {
-        borderWidth: 2,
-        backgroundColor: 'white',
-        borderColor: '#FF69B4',
-        borderRadius: 10,
-        height: 40,
-        width: 225,
-        marginTop: 15,
-    },
-    opac_last: {
-        borderWidth: 2,
-        backgroundColor: 'white',
-        borderColor: '#FF69B4',
-        borderRadius: 10,
-        height: 40,
-        width: 225,
-        marginVertical: 15,
+        textShadowColor: '#f762a3',
     },
     photo: {
         height: 180,
@@ -177,41 +177,49 @@ export default StyleSheet.create({
         borderBottomRightRadius: 10,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        margin: 10,
-        padding: 5,
+        paddingTop: 10,
+        paddingBottom: 40,
+    },
+    resources_block: {
+        paddingTop: 10,
+        paddingBottom: 40,
     },
     resourceText: {
-        color: 'black',
-        textShadowColor: '#FFB6DA',
-        textShadowOffset: { width: 5, height: 5 },
-        textShadowRadius: 50,
+        color: '#FFF',
         margin: 10,
-        fontSize: 15,
+        fontSize: 18,
         textAlign: 'center',
         fontWeight: 'bold',
     },
     resourceTitle: {
-        color: 'black',
+        color: '#FFF',
         fontWeight: 'bold',
-        fontSize: 22,
+        fontSize: 30,
         textAlign: 'center',
-        textShadowColor: '#FFB6DA',
-        textShadowOffset: { width: 5, height: 3 },
-        textShadowRadius: 2,
+        textShadowColor: '#FF69B4',
+        textShadowOffset: { width: 3, height: 2 },
+        textShadowRadius: 3,
         marginTop: 22,
         marginBottom: 5,
     },
     secondaryResourceText: {
         color: '#f5f5f5',
         fontStyle: 'italic',
-        textDecorationColor: '#7AD7F0',
-        textDecorationLine: 'underline',
-        textDecorationStyle: 'solid',
         textShadowRadius: 2,
         margin: 10,
         fontSize: 17,
         textAlign: 'center',
         fontWeight: 'bold',
+    },
+    pink_line: {
+        textDecorationColor: '#FF69B4',
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'solid',
+    },
+    blue_line: {
+        textDecorationColor: '#398ff4',
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'solid',
     },
     signin: {
         flexDirection: 'row',

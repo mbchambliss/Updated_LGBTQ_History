@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { navigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -32,11 +33,12 @@ export default function App() {
           options={({ navigation }) => ({
             title: "LGBTQ+ History",
             headerLeft: () => (
+
               <Icon.Button
                 name="align-justify"
-                color="#FF69B4"
-                backgroundColor="#fff"
                 onPress={() => navigation.push('AccountScreen')}
+                backgroundColor="#FFF"
+                color="#398ff4"
               />
             ),
             headerRight: () => (

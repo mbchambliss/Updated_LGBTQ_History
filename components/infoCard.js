@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, Linking, SafeAreaView, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import styles from '../stylesheets/infocard_styles';
 
 import { db } from '../firebase';
-import { collection, onSnapshot, doc, getDocs, query, where, getDoc } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
 
 function InfoCard() {
@@ -25,7 +26,6 @@ function InfoCard() {
 	useEffect(() => {
 		const getEvents = async () => {
 			const data = await getDocs(eventsCollectionRef);
-			// console.log(JSON.stringify(data));
 			setEvents(data.docs.map((doc) => ({ ...doc.data() })));
 		}
 		getEvents();
@@ -36,19 +36,28 @@ function InfoCard() {
 			{events.map((event) => {
 				return (
 					<View style={styles.card} key={event.id}>
-						<Text style={styles.title}>{event.title}</Text>
-						<Text style={styles.content}>{event.date}</Text>
-						<Text style={styles.content}>{event.short_desc}</Text>
-						<View style={styles.align}>
-							<Text style={styles.more}
-								onPress={() => Linking.openURL(event.link)}>More Info</Text>
-							<Icon.Button
-								name="heart-outline"
-								textAlign="center"
-								color="white"
-								backgroundColor="#FF69B4"
-							/>
-						</View>
+						<LinearGradient
+							colors={['#0D73E7', '#e40c69']}
+							locations={[0.1, 1]}
+							start={{ x: 0.4, y: 0.6 }}
+							end={{ x: 0.8, y: 0.9 }}
+							style={styles.card_details}
+						>
+							<Text style={styles.title}>{event.title}</Text>
+							<Text style={styles.content}>{event.date}</Text>
+							<Text style={styles.content}>{event.short_desc}</Text>
+							<View style={styles.align}>
+								<Text style={styles.more}
+									onPress={() => Linking.openURL(event.link)}>More Info</Text>
+								<Icon.Button
+									name="heart-outline"
+									textAlign="center"
+									color="#FFFFFF"
+									backgroundColor="transparent"
+									size={20}
+								/>
+							</View>
+						</LinearGradient>
 					</View>
 				)
 			})}
