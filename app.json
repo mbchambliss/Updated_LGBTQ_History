@@ -6,9 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/Q.png",
     "splash": {
-      "image": "./assets/Q.png",
+      "image": "./assets/updated_logo_no_background.png",
       "resizeMode": "contain",
-      "backgroundColor": "#7AD7F0"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,8 +21,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/Q.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/holo.png",
+        "backgroundColor": "#000000"
       }
     },
     "web": {
