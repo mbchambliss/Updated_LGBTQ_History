@@ -7,6 +7,7 @@ import styles from '../stylesheets/infocard_styles';
 
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import defaultEvents from '../events/default_events.json';
 
 
 function InfoCard() {
@@ -26,7 +27,11 @@ function InfoCard() {
 	useEffect(() => {
 		const getEvents = async () => {
 			const data = await getDocs(eventsCollectionRef);
-			setEvents(data.docs.map((doc) => ({ ...doc.data() })));
+			if (data.docs.length > 0) {
+				setEvents(data.docs.map((doc) => ({ ...doc.data() })));
+			} else {
+				setEvents(defaultEvents);
+			}
 		}
 		getEvents();
 	}, []);
@@ -37,10 +42,10 @@ function InfoCard() {
 				return (
 					<View style={styles.card} key={event.id}>
 						<LinearGradient
-							colors={['#0D73E7', '#e40c69']}
+							colors={['#BB4E75', '#1E2AD2']}
 							locations={[0.1, 1]}
-							start={{ x: 0.4, y: 0.6 }}
-							end={{ x: 0.8, y: 0.9 }}
+							start={{ x: 0.1, y: 0.2 }}
+							end={{ x: 0.3, y: 1.0 }}
 							style={styles.card_details}
 						>
 							<Text style={styles.title}>{event.title}</Text>
