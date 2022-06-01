@@ -1,9 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    about_flex: {
-        flex: 1,
+    about: {
         paddingTop: '10%'
+    },
+    alignCenter: {
+        alignItems: 'center'
+    },
+    alignSelfCenter: {
+        alignSelf: 'center'
     },
     already: {
         fontSize: 16,
@@ -13,9 +18,6 @@ export default StyleSheet.create({
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 1 },
         textShadowColor: 'black',
-    },
-    first_resource: {
-        marginTop: 20,
     },
     alreadyBtnText: {
         color: '#1dacd6',
@@ -28,56 +30,30 @@ export default StyleSheet.create({
         marginTop: '9%',
         paddingLeft: 2,
     },
-    backColor: {
-        backgroundColor: '#f6f6f6',
-        alignItems: 'center'
+    blue_line: {
+        textDecorationColor: '#398ff4',
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'solid',
+    },
+    btnText: {
+        color: '#fff',
+        fontSize: 20,
+        marginVertical: 5,
+        marginHorizontal: 20,
+        fontWeight: 'bold',
+        textShadowRadius: 3,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowColor: '#FF69B4',
     },
     button: {
         borderWidth: 4,
         borderColor: '#1dacd6',
-        alignSelf: 'center',
         backgroundColor: '#1dacd6',
         borderRadius: 35,
         marginTop: 20,
     },
-    signInButton: {
-        borderWidth: 4,
-        borderColor: '#1dacd6',
-        alignSelf: 'center',
-        backgroundColor: '#1dacd6',
-        borderRadius: 35,
-        marginTop: 10,
-        width: 150,
-    },
-    signInButtonLong: {
-        borderWidth: 4,
-        borderColor: '#1dacd6',
-        alignSelf: 'center',
-        backgroundColor: '#1dacd6',
-        borderRadius: 35,
-        marginTop: 15,
-        width: 325,
-    },
-    forgotPasswordBtn: {
-        alignSelf: 'center',
-        borderRadius: 35,
-        marginTop: 15,
-        width: 325,
-    },
-    forgotPasswordBtnText: {
-        alignSelf: 'center',
-        fontSize: 18,
-        marginVertical: 5,
-        marginHorizontal: 20,
-        fontWeight: 'bold',
-        color: '#FF69B4',
-        textShadowRadius: 1,
-        textShadowOffset: { width: 0, height: 1 },
-        textShadowColor: 'black',
-    },
     buttonContainerSignIn: {
         display: 'flex',
-        flexDirection: 'row',
         justifyContent: 'space-between',
         marginLeft: '10%',
         marginRight: '10%'
@@ -87,34 +63,10 @@ export default StyleSheet.create({
         textShadowRadius: 1,
         textShadowOffset: { width: 0, height: 1 },
         textShadowColor: 'black',
-        alignSelf: 'center',
         fontWeight: 'bold',
         fontSize: 20
     },
-    opac: {
-        borderWidth: 0.75,
-        backgroundColor: '#f762a3',
-        borderColor: '#f4f5f0',
-        borderRadius: 20,
-        height: 40,
-        width: 225,
-        marginTop: 15,
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    btnText: {
-        color: 'white',
-        alignSelf: 'center',
-        fontSize: 20,
-        marginVertical: 5,
-        marginHorizontal: 20,
-        fontWeight: 'bold',
-        textShadowRadius: 3,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: '#FF69B4',
-    },
     feedback: {
-        alignSelf: 'center',
         fontWeight: 'bold',
         color: '#FF69B4',
         fontSize: 26,
@@ -122,36 +74,40 @@ export default StyleSheet.create({
         textShadowOffset: { width: 1, height: 1 },
         textShadowColor: 'black',
     },
-    flexCenter: {
-        display: 'flex',
-        justifyContent: 'center',
-        flex: 1,
+    first_resource: {
+        marginTop: 20,
     },
-
-    flexCenterSignIn: {
+    flexDisplayJustifyCenter: {
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
-    signInTitle: {
-        marginTop: '20%',
-        marginBottom: '30%',
-        alignSelf: 'center',
+    flexOne: {
+        flex: 1
+    },
+    flexRow: {
+        flexDirection: 'row'
+    },
+    forgotPasswordBtn: {
+        borderRadius: 35,
+        marginTop: 15,
+        width: 325,
+    },
+    forgotPasswordBtnText: {
+        fontSize: 18,
+        marginVertical: 5,
+        marginHorizontal: 20,
         fontWeight: 'bold',
         color: '#FF69B4',
-        fontSize: 40,
         textShadowRadius: 1,
-        textShadowOffset: { width: 1, height: 1 },
+        textShadowOffset: { width: 0, height: 1 },
         textShadowColor: 'black',
-    },
-    signInCenter: {
-        display: 'flex',
-        justifyContent: 'center',
     },
     inputMessage: {
         width: '75%',
         height: 100,
-        borderColor: '#1dacd6',
-        borderWidth: 2,
+        borderLeftColor: '#1dacd6',
+        borderLeftWidth: 4,
+        backgroundColor: '#fff',
         marginLeft: '10%',
         marginBottom: 30,
     },
@@ -164,12 +120,26 @@ export default StyleSheet.create({
         textShadowOffset: { width: 1, height: 1 },
         textShadowColor: '#f762a3',
     },
+    opac: {
+        borderWidth: 0.75,
+        backgroundColor: '#f762a3',
+        borderColor: '#f4f5f0',
+        borderRadius: 20,
+        height: 40,
+        width: 225,
+        marginTop: 15
+    },
     photo: {
         height: 180,
         width: 180,
         marginTop: '15%',
         marginBottom: 10,
         borderRadius: 100,
+    },
+    pink_line: {
+        textDecorationColor: '#FF69B4',
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'solid',
     },
     resourceBlock: {
         backgroundColor: '#FF69B4',
@@ -211,19 +181,34 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
     },
-    pink_line: {
-        textDecorationColor: '#FF69B4',
-        textDecorationLine: 'underline',
-        textDecorationStyle: 'solid',
-    },
-    blue_line: {
-        textDecorationColor: '#398ff4',
-        textDecorationLine: 'underline',
-        textDecorationStyle: 'solid',
-    },
     signin: {
-        flexDirection: 'row',
         justifyContent: 'center'
+    },
+    signInButton: {
+        borderWidth: 4,
+        borderColor: '#1dacd6',
+        backgroundColor: '#1dacd6',
+        borderRadius: 35,
+        marginTop: 10,
+        width: 150,
+    },
+    signInButtonLong: {
+        borderWidth: 4,
+        borderColor: '#1dacd6',
+        backgroundColor: '#1dacd6',
+        borderRadius: 35,
+        marginTop: 15,
+        width: 325,
+    },
+    signInTitle: {
+        marginTop: '20%',
+        marginBottom: '30%',
+        fontWeight: 'bold',
+        color: '#FF69B4',
+        fontSize: 40,
+        textShadowRadius: 1,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowColor: 'black',
     },
     signInText: {
         fontSize: 22,
@@ -245,9 +230,6 @@ export default StyleSheet.create({
         textShadowOffset: { width: 1, height: 1 },
         textShadowColor: 'black',
     },
-    textMargin: {
-        marginTop: '15%',
-    },
     textInput: {
         width: '75%',
         height: 30,
@@ -258,4 +240,13 @@ export default StyleSheet.create({
         paddingLeft: 5,
         marginBottom: '8%',
     },
+    textMargin: {
+        marginTop: '15%',
+    },
+    warning_modal: {
+        width: 300,
+        height: 300,
+        backgroundColor: '#1dacd6',
+        opacity: .6
+    }
 });

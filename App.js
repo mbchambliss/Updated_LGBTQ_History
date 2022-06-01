@@ -1,64 +1,228 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, navigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { navigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import { Image } from 'react-native';
+import { auth } from "./firebase";
+import CalDropdown from './components/caldropdown';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
-  HomeScreen,
   AboutScreen,
   AccountScreen,
-  FavoritesScreen,
   ContactScreen,
+  ForgotPasswordScreen,
+  HomeScreen,
   ResourceScreen,
   SigninScreen,
-  SignupScreen,
-  ForgotPasswordScreen
+  SplashScreen,
+  VisitorScreen
 } from './screens';
 
+const AboutStack = createNativeStackNavigator();
+const AccountStack = createNativeStackNavigator();
+const ContactStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
+const ResourceStack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
+const AboutStackScreen = ({ navigation }) => (
+  <AboutStack.Navigator>
+    <AboutStack.Screen name="AboutScreen"
+      component={AboutScreen}
+      options={({ navigation }) => ({
+        headerTitle: () => (
+          <Image
+            style={{ width: 90, height: 90, marginTop: -15 }}
+            source={require('./assets/updated_logo_no_background.png')}
+          />
+        ),
+        headerLeft: () => (
+          <AntIcon.Button
+            name="plus"
+            backgroundColor="#fcedfc"
+            color="#398ff4"
+            onPress={() =>
+              navigation.openDrawer()} />
+        ),
+        headerStyle: {
+          backgroundColor: '#fcedfc',
+          height: 200
+        },
+        headerShadowVisible: false
+      })}
+    />
+  </AboutStack.Navigator>
+);
+const AccountStackScreen = ({ navigation }) => (
+  <AccountStack.Navigator>
+    <AccountStack.Screen name="AccountScreen"
+      component={AccountScreen}
+      options={({ navigation }) => ({
+        headerTitle: () => (
+          <Image
+            style={{ width: 90, height: 90, marginTop: -15 }}
+            source={require('./assets/updated_logo_no_background.png')}
+          />
+        ),
+        headerLeft: () => (
+          <AntIcon.Button
+            name="plus"
+            backgroundColor="#fcedfc"
+            color="#398ff4"
+            onPress={() =>
+              navigation.openDrawer()} />
+        ),
+        headerStyle: {
+          backgroundColor: '#fcedfc',
+          height: 200
+        },
+        headerShadowVisible: false
+      })}
+    />
+  </AccountStack.Navigator>
+);
+const ContactStackScreen = ({ navigation }) => (
+  <ContactStack.Navigator>
+    <ContactStack.Screen name="ContactScreen"
+      component={ContactScreen}
+      options={({ navigation }) => ({
+        headerTitle: () => (
+          <Image
+            style={{ width: 90, height: 90, marginTop: -15 }}
+            source={require('./assets/updated_logo_no_background.png')}
+          />
+        ),
+        headerLeft: () => (
+          <AntIcon.Button
+            name="plus"
+            backgroundColor="#fcedfc"
+            color="#398ff4"
+            onPress={() =>
+              navigation.openDrawer()} />
+        ),
+        headerStyle: {
+          backgroundColor: '#fcedfc',
+          height: 200
+        },
+        headerShadowVisible: false
+      })}
+    />
+  </ContactStack.Navigator>
+);
+const HomeStackScreen = ({ navigation }) => (
+  <HomeStack.Navigator>
+    <HomeStack.Screen
+      name="HomeScreen"
+      component={HomeScreen}
+      options={({ navigation }) => ({
+        headerTitle: () => (
+          <Image
+            style={{ width: 90, height: 90, marginTop: -15 }}
+            source={require('./assets/updated_logo_no_background.png')}
+          />
+        ),
+        headerLeft: () => (
+          <AntIcon.Button
+            name="plus"
+            backgroundColor="#fcedfc"
+            color="#398ff4"
+            size={24}
+            onPress={() =>
+              navigation.openDrawer()} />
+        ),
+        headerRight: () => (
+          <AntIcon.Button
+            name="calendar"
+            backgroundColor="#fcedfc"
+            color="#398ff4"
+            size={24}
+          // onPress={showCal}
+          />
+        ),
+        headerStyle: {
+          backgroundColor: '#fcedfc',
+          height: 200
+        },
+        headerShadowVisible: false
+      })}
+    />
+  </HomeStack.Navigator>
+);
+const ResourceStackScreen = ({ navigation }) => (
+  <ResourceStack.Navigator>
+    <ResourceStack.Screen name="ResourceScreen"
+      component={ResourceScreen}
+      options={({ navigation }) => ({
+        headerTitle: () => (
+          <Image
+            style={{ width: 90, height: 90, marginTop: -15 }}
+            source={require('./assets/updated_logo_no_background.png')}
+          />
+        ),
+        headerLeft: () => (
+          <AntIcon.Button
+            name="plus"
+            backgroundColor="#fcedfc"
+            color="#398ff4"
+            onPress={() =>
+              navigation.openDrawer()} />
+        ),
+        headerStyle: {
+          backgroundColor: '#fcedfc',
+          height: 200
+        },
+        headerShadowVisible: false
+      })}
+    />
+  </ResourceStack.Navigator>
+);
 const Stack = createNativeStackNavigator();
+
+function LoggedIn({ navigation }) {
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.navigate('Signin');
+      })
+      .catch(error => alert(error.message))
+  }
+  return (
+    <Drawer.Navigator defaultStatus='closed' screenOptions={{ headerShown: false }}
+      drawerContent={props => {
+        return (
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            <DrawerItem label="Logout" onPress={handleSignOut} />
+          </DrawerContentScrollView>
+        )
+      }}>
+      <Drawer.Screen name="Home" component={HomeStackScreen} />
+      <Drawer.Screen name="About" component={AboutStackScreen} />
+      <Drawer.Screen name="Account" component={AccountStackScreen} />
+      <Drawer.Screen name="Contact" component={ContactStackScreen} />
+      <Drawer.Screen name="Resources" component={ResourceStackScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name='Splash' component={SplashScreen} navigation={navigation} options={{ headerShown: false }} />
 
-        <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ title: "Sign In" }} />
+        <Stack.Group>
+          <Stack.Screen name='Signin' component={SigninScreen} navigation={navigation} options={{ headerShown: false }} />
+          <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='Visitor' component={VisitorScreen} options={{ headerShown: false }} />
+        </Stack.Group>
 
-        <Stack.Screen name="HomeScreen"
-          component={HomeScreen}
-          options={({ navigation }) => ({
-            title: "LGBTQ+ History",
-            headerLeft: () => (
+        <Stack.Screen name='LoggedIn' component={LoggedIn} options={{ headerShown: false }} />
 
-              <Icon.Button
-                name="align-justify"
-                onPress={() => navigation.push('AccountScreen')}
-                backgroundColor="#FFF"
-                color="#398ff4"
-              />
-            ),
-            headerRight: () => (
-              <Icon.Button
-                name="user"
-                color="#FF69B4"
-                backgroundColor="#fff"
-                onPress={() => navigation.push('AccountScreen')}
-              />
-            ),
-          })}
-        />
-        <Stack.Screen name="AboutScreen" component={AboutScreen} options={{ title: "About" }} />
-        <Stack.Screen name="AccountScreen" component={AccountScreen} options={{ title: "Account" }} />
-        <Stack.Screen name="FavoritesScreen" component={FavoritesScreen} options={{ title: "Favorites" }} />
-        <Stack.Screen name="ContactScreen" component={ContactScreen} options={{ title: "Contact Us" }} />
-        <Stack.Screen name="ResourceScreen" component={ResourceScreen} options={{ title: "Resources" }} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ title: "Sign Up" }} />
-        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ title: "Reset Password" }} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }

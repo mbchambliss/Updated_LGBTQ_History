@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+    testInfoCardColors: {
+        backgroundColor: '#09417D',
+        borderRadius: 20,
+        padding: 5,
+    },
     card: {
-        // backgroundColor: '#FF69B4',
-        // backgroundColor: '#5B788B',
-        // backgroundColor: '#874356',
-        // backgroundColor: '#AD586E',
         width: '92%',
         alignSelf: 'center',
         marginTop: 25,
@@ -20,13 +21,15 @@ export default StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        color: '#FFFFFF',
+        // color: '#FFFFFF',
+        color: '#FAC7ED',
         fontWeight: 'bold',
         paddingTop: 4,
         fontSize: 18,
     },
     content: {
-        color: '#FFFFFF',
+        // color: '#FFFFFF',
+        color: '#FAC7ED',
         textAlign: 'center',
         fontSize: 16,
         paddingVertical: 8,
