@@ -21,14 +21,12 @@ export default StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        // color: '#FFFFFF',
         color: '#FAC7ED',
         fontWeight: 'bold',
         paddingTop: 4,
         fontSize: 18,
     },
     content: {
-        // color: '#FFFFFF',
         color: '#FAC7ED',
         textAlign: 'center',
         fontSize: 16,
@@ -40,13 +38,25 @@ export default StyleSheet.create({
         height: 30,
     },
     more: {
-        color: '#FFFFFF',
-        paddingLeft: 8,
+        backgroundColor: '#FAC7ED',
+        paddingVertical: 8,
+        paddingHorizontal: 14,
+        borderWidth: 1.5,
+        borderColor: '#09417D',
+        borderRadius: 20,
+        shadowColor: '#FFF',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 0.14,
+        shadowRadius: 5,
+    },
+    moreText: {
         fontSize: 16,
         fontWeight: 'bold',
-        paddingRight: '62%',
+        color: '#09417D',
     },
     align: {
         flexDirection: 'row',
+        marginVertical: 10,
+        marginLeft: 6,
     },
 });

@@ -17,7 +17,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
+        textShadowColor: '#000',
     },
     alreadyBtnText: {
         color: '#1dacd6',
@@ -25,10 +25,13 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         textShadowRadius: .5,
         textShadowOffset: { width: .7, height: .7 },
-        textShadowColor: 'black',
+        textShadowColor: '#000',
         marginLeft: '2%',
         marginTop: '9%',
         paddingLeft: 2,
+    },
+    blueBackground: {
+        backgroundColor: '#1dacd6',
     },
     blue_line: {
         textDecorationColor: '#398ff4',
@@ -45,13 +48,13 @@ export default StyleSheet.create({
         textShadowOffset: { width: 1, height: 1 },
         textShadowColor: '#FF69B4',
     },
-    button: {
-        borderWidth: 4,
-        borderColor: '#1dacd6',
-        backgroundColor: '#1dacd6',
-        borderRadius: 35,
-        marginTop: 20,
-    },
+    // button: {
+    //     borderWidth: 4,
+    //     borderColor: '#1dacd6',
+    //     backgroundColor: '#1dacd6',
+    //     borderRadius: 35,
+    //     marginTop: 20,
+    // },
     buttonContainerSignIn: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -62,7 +65,7 @@ export default StyleSheet.create({
         color: '#fff',
         textShadowRadius: 1,
         textShadowOffset: { width: 0, height: 1 },
-        textShadowColor: 'black',
+        textShadowColor: '#000',
         fontWeight: 'bold',
         fontSize: 20
     },
@@ -72,7 +75,7 @@ export default StyleSheet.create({
         fontSize: 26,
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
+        textShadowColor: '#000',
     },
     first_resource: {
         marginTop: 20,
@@ -100,14 +103,14 @@ export default StyleSheet.create({
         color: '#FF69B4',
         textShadowRadius: 1,
         textShadowOffset: { width: 0, height: 1 },
-        textShadowColor: 'black',
+        textShadowColor: '#000',
     },
     inputMessage: {
         width: '75%',
         height: 100,
-        borderLeftColor: '#1dacd6',
+        borderLeftColor: '#1DACD6',
         borderLeftWidth: 4,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFF',
         marginLeft: '10%',
         marginBottom: 30,
     },
@@ -118,12 +121,12 @@ export default StyleSheet.create({
         textAlign: 'center',
         textShadowRadius: 2,
         textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: '#f762a3',
+        textShadowColor: '#F762A3',
     },
     opac: {
         borderWidth: 0.75,
-        backgroundColor: '#f762a3',
-        borderColor: '#f4f5f0',
+        backgroundColor: '#F762A3',
+        borderColor: '#F4F5F0',
         borderRadius: 20,
         height: 40,
         width: 225,
@@ -153,6 +156,24 @@ export default StyleSheet.create({
     resources_block: {
         paddingTop: 10,
         paddingBottom: 40,
+    },
+    margin_block: {
+        paddingBottom: 40,
+        marginBottom: 20,
+        minHeight: '97%'
+    },
+    redBackground: {
+        backgroundColor: '#CC0202',
+    },
+    redButton: {
+        borderWidth: 4,
+        borderColor: '#CC0202',
+        borderRadius: 35,
+    },
+    redButton: {
+        borderWidth: 2,
+        borderColor: '#CC0202',
+        borderRadius: 4,
     },
     resourceText: {
         color: '#FFF',
@@ -187,18 +208,14 @@ export default StyleSheet.create({
     signInButton: {
         borderWidth: 4,
         borderColor: '#1dacd6',
-        backgroundColor: '#1dacd6',
         borderRadius: 35,
         marginTop: 10,
-        width: 150,
     },
-    signInButtonLong: {
-        borderWidth: 4,
-        borderColor: '#1dacd6',
-        backgroundColor: '#1dacd6',
-        borderRadius: 35,
-        marginTop: 15,
-        width: 325,
+    buttonLength: {
+        width: 150
+    },
+    buttonLengthLong: {
+        width: 325
     },
     signInTitle: {
         marginTop: '20%',
@@ -208,7 +225,7 @@ export default StyleSheet.create({
         fontSize: 40,
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
+        textShadowColor: '#000',
     },
     signInText: {
         fontSize: 22,
@@ -218,7 +235,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
+        textShadowColor: '#000',
     },
     text: {
         fontSize: 18,
@@ -228,7 +245,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 1 },
-        textShadowColor: 'black',
+        textShadowColor: '#000',
     },
     textInput: {
         width: '75%',
@@ -243,10 +260,16 @@ export default StyleSheet.create({
     textMargin: {
         marginTop: '15%',
     },
-    warning_modal: {
-        width: 300,
-        height: 300,
-        backgroundColor: '#1dacd6',
-        opacity: .6
+    currentDayBtn: {
+        borderWidth: 2,
+        borderColor: '#FFF',
+        borderRadius: 35,
+        marginTop: 10,
+        padding: 8
     }
+    // warning_modal: {
+    //     width: 300,
+    //     height: 300,
+    //     opacity: .6
+    // }
 });

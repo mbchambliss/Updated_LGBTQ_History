@@ -1,31 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Linking, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { LinearGradient } from 'expo-linear-gradient';
-
 import styles from '../stylesheets/infocard_styles';
-
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import defaultEvents from '../events/default_events.json';
 import { auth } from '../firebase';
 
 
-function InfoCard() {
+function InfoCard({ daySelect, monthSelect }) {
+
+	console.log('InfoCard date details (M/D): ', monthSelect.toString(), "/", daySelect.toString());
 
 	const [events, setEvents] = useState([]);
-	const getCurrentDate = () => {
-		var date = new Date().getDate();
-		var month = new Date().getMonth() + 1;
-		return month + '-' + date;
-	}
-	let date = getCurrentDate();
-	// const eventsCollectionRef = collection(db, "events", date, "this_day");
-	const eventsCollectionRef = collection(db, "test_events", "1-1", "this_day");
 
 	useEffect(() => {
 		const getEvents = async () => {
-			const data = await getDocs(eventsCollectionRef);
+			const day = await daySelect.toString();
+			const month = await monthSelect.toString();
+			let this_day = `${month}-${day}`;
+			const data = await getDocs(collection(db, "test_events", this_day, "this_day"));
 			if (data.docs.length > 0) {
 				setEvents(data.docs.map((doc) => ({ ...doc.data() })));
 			} else {
@@ -33,7 +27,7 @@ function InfoCard() {
 			}
 		}
 		getEvents();
-	}, []);
+	}, [daySelect, monthSelect]);
 
 	return (
 		<View >
@@ -54,9 +48,10 @@ function InfoCard() {
 							<Text style={styles.content}>{event.extra}</Text>
 						}
 						<View style={styles.align}>
-							<Text style={styles.more}
-								onPress={() => Linking.openURL(event.link)}>More Info</Text>
-							{auth.currentUser != null &&
+							<View style={styles.more}>
+								<Text style={styles.moreText}
+									onPress={() => Linking.openURL(event.link)}>More Info</Text>
+								{/* {auth.currentUser != null &&
 								<Icon.Button
 									name="heart-outline"
 									textAlign="center"
@@ -64,7 +59,8 @@ function InfoCard() {
 									backgroundColor="transparent"
 									size={20}
 								/>
-							}
+							} */}
+							</View>
 						</View>
 						{/* </LinearGradient> */}
 					</View>

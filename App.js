@@ -5,20 +5,20 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerI
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import { Image } from 'react-native';
 import { auth } from "./firebase";
-import CalDropdown from './components/caldropdown';
-
 
 import {
   AboutScreen,
   AccountScreen,
   ContactScreen,
+  DateSelectScreen,
   ForgotPasswordScreen,
-  HomeScreen,
   ResourceScreen,
   SigninScreen,
   SplashScreen,
   VisitorScreen
 } from './screens';
+
+import { HomeStackScreen } from './HomeStackScreen';
 
 const AboutStack = createNativeStackNavigator();
 const AccountStack = createNativeStackNavigator();
@@ -111,45 +111,44 @@ const ContactStackScreen = ({ navigation }) => (
     />
   </ContactStack.Navigator>
 );
-const HomeStackScreen = ({ navigation }) => (
-  <HomeStack.Navigator>
-    <HomeStack.Screen
-      name="HomeScreen"
-      component={HomeScreen}
-      options={({ navigation }) => ({
-        headerTitle: () => (
-          <Image
-            style={{ width: 90, height: 90, marginTop: -15 }}
-            source={require('./assets/updated_logo_no_background.png')}
-          />
-        ),
-        headerLeft: () => (
-          <AntIcon.Button
-            name="plus"
-            backgroundColor="#fcedfc"
-            color="#398ff4"
-            size={24}
-            onPress={() =>
-              navigation.openDrawer()} />
-        ),
-        headerRight: () => (
-          <AntIcon.Button
-            name="calendar"
-            backgroundColor="#fcedfc"
-            color="#398ff4"
-            size={24}
-          // onPress={showCal}
-          />
-        ),
-        headerStyle: {
-          backgroundColor: '#fcedfc',
-          height: 200
-        },
-        headerShadowVisible: false
-      })}
-    />
-  </HomeStack.Navigator>
-);
+// const HomeStackScreen = ({ navigation }) => (
+//   <HomeStack.Navigator>
+//     <HomeStack.Screen
+//       name="HomeScreen"
+//       component={HomeScreen}
+//       options={({ navigation }) => ({
+//         headerTitle: () => (
+//           <Image
+//             style={{ width: 90, height: 90, marginTop: -15 }}
+//             source={require('./assets/updated_logo_no_background.png')}
+//           />
+//         ),
+//         headerLeft: () => (
+//           <AntIcon.Button
+//             name="plus"
+//             backgroundColor="#fcedfc"
+//             color="#398ff4"
+//             size={24}
+//             onPress={() =>
+//               navigation.openDrawer()} />
+//         ),
+//         headerRight: () => (
+//           <AntIcon.Button
+//             name="calendar"
+//             backgroundColor="#fcedfc"
+//             color="#398ff4"
+//             size={24}
+//           />
+//         ),
+//         headerStyle: {
+//           backgroundColor: '#fcedfc',
+//           height: 200
+//         },
+//         headerShadowVisible: false
+//       })}
+//     />
+//   </HomeStack.Navigator>
+// );
 const ResourceStackScreen = ({ navigation }) => (
   <ResourceStack.Navigator>
     <ResourceStack.Screen name="ResourceScreen"
@@ -190,7 +189,7 @@ function LoggedIn({ navigation }) {
       .catch(error => alert(error.message))
   }
   return (
-    <Drawer.Navigator defaultStatus='closed' screenOptions={{ headerShown: false }}
+    <Drawer.Navigator defaultStatus="closed" initialRouteName="Events" screenOptions={{ headerShown: false }}
       drawerContent={props => {
         return (
           <DrawerContentScrollView {...props}>
@@ -199,7 +198,8 @@ function LoggedIn({ navigation }) {
           </DrawerContentScrollView>
         )
       }}>
-      <Drawer.Screen name="Home" component={HomeStackScreen} />
+      <Drawer.Screen name="Events" component={HomeStackScreen} />
+      <Drawer.Screen name="Select A Date" component={DateSelectScreen} />
       <Drawer.Screen name="About" component={AboutStackScreen} />
       <Drawer.Screen name="Account" component={AccountStackScreen} />
       <Drawer.Screen name="Contact" component={ContactStackScreen} />
@@ -221,7 +221,6 @@ export default function App() {
         </Stack.Group>
 
         <Stack.Screen name='LoggedIn' component={LoggedIn} options={{ headerShown: false }} />
-
       </Stack.Navigator>
     </NavigationContainer>
   )
