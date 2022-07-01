@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 events.json
+events_backup*.json
 firebase.js
 serviceAccount.json
 .env

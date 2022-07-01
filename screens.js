@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import {
     View, KeyboardAvoidingView, Text, TextInput,
-    ScrollView, Image, TouchableOpacity, Linking, Modal
+    ScrollView, Image, TouchableOpacity, Linking,
+    ActivityIndicator
 } from 'react-native';
 import InfoCard from './components/infoCard';
 import VisitorHeader from './components/visitor_header';
@@ -46,42 +47,253 @@ export const AboutScreen = () => {
     );
 }
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ route }) => {
+    const [daySelect, setDaySelect] = useState(new Date().getDate());
+    const [monthSelect, setMonthSelect] = useState(new Date().getMonth() + 1);
+
+    const checkRouteParamsForDate = (daySelect, monthSelect, route) => {
+        if (route.params) {
+            if (route.params['day'] !== "" || route.params['day'] !== undefined) {
+                if (daySelect === route.params['day']) {
+                    return;
+                } else {
+                    setDaySelect(route.params['day']);
+                }
+            }
+            if (route.params['month'] !== "" || route.params['month'] !== undefined) {
+                if (monthSelect === route.params['month']) {
+                    return;
+                } else {
+                    setMonthSelect(route.params['month']);
+                }
+            }
+            console.log('Month & day: ', monthSelect, "/", daySelect);
+        }
+    }
+
+    checkRouteParamsForDate(daySelect, monthSelect, route);
+
     return (
-        <View>
-            <View style={{ height: 20, backgroundColor: '#fcedfc' }}></View>
-            <ScrollView>
-                <LinearGradient
-                    colors={['#398ff4', '#f762a3']}
-                    locations={[0.1, 1]}
-                    start={{ x: 0.1, y: 0.1 }}
-                    end={{ x: 0.1, y: 0.9 }}
-                    style={[styles.resourceBlock, styles.flexOne]}
-                >
-                    <InfoCard />
-                </LinearGradient>
-            </ScrollView>
-        </View>
+        <View style={{ flex: 1, height: '100%' }}>
+            <View style={{ height: '3%', backgroundColor: '#fcedfc' }}></View>
+            <LinearGradient
+                colors={['#398ff4', '#f762a3']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={styles.margin_block}
+            >
+                <ScrollView showsVerticalScrollIndicator={false} style={{ height: '92%' }}>
+                    <InfoCard daySelect={daySelect} monthSelect={monthSelect} />
+                </ScrollView>
+                {(daySelect != new Date().getDate() && monthSelect != new Date().getMonth() + 1) &&
+                    <View style={[styles.alignCenter, {
+                        shadowColor: '#FFF',
+                        shadowOffset: { width: 1, height: 1 },
+                        shadowOpacity: 0.5,
+                        shadowRadius: 5,
+                        marginTop: 8
+                    }]}>
+                        <TouchableOpacity
+                            style={[styles.currentDayBtn, styles.buttonLengthLong, {
+                                backgroundColor: '#09417D', borderColor: '#FFF', borderWidth: 1
+                            }]}
+                            onPress={() => {
+                                route.params['day'] = new Date().getDate();
+                                route.params['month'] = new Date().getMonth() + 1;
+                                setMonthSelect(route.params['month']);
+                                setDaySelect(route.params['day']);
+                            }}>
+                            <Text style={[styles.buttonText, styles.alignSelfCenter]}>Today's Events</Text>
+                        </TouchableOpacity>
+                    </View>
+                }
+            </LinearGradient>
+        </View >
     );
 }
 
+export const DateSelectScreen = ({ navigation }) => {
+    const [month, setMonth] = useState("");
+    const [day, setDay] = useState("");
+
+    const [invalidMonth, setInvalidMonth] = useState(false);
+    const [invalidDay, setInvalidDay] = useState(false);
+
+    const firstRender = useRef(true);
+
+    useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false;
+            return;
+        }
+
+        checkValidMonth(month);
+        checkValidDay(day);
+    }, [month, day])
+
+    const checkValidMonth = () => {
+        if (parseInt(month) == 0 || parseInt(month) > 12 || month == null) {
+            console.log("This month is not valid.");
+            setInvalidMonth(true);
+        } else {
+            setInvalidMonth(false);
+        }
+    }
+
+    const checkValidDay = () => {
+        if (invalidDay == true) {
+            setInvalidDay(false);
+        }
+
+        if (parseInt(day) == 0) {
+            console.log("This day is not valid.");
+            setInvalidDay(true);
+        } else if (parseInt(month) == 2) {
+            if (parseInt(day) > 29) {
+                console.log("This day is not valid.");
+                setInvalidDay(true);
+            }
+        } else if (parseInt(month) == 4 || parseInt(month) == 6 || parseInt(month) == 9 || parseInt(month) == 11) {
+            if (parseInt(day) > 30) {
+                console.log("This day is not valid.");
+                setInvalidDay(true);
+            }
+        } else if (parseInt(month) == 1 || parseInt(month) == 3 || parseInt(month) == 5 || parseInt(month) == 7 || parseInt(month) == 8 || parseInt(month) == 10 || parseInt(month) == 12) {
+            if (parseInt(day) > 31) {
+                console.log("This day is not valid.");
+                setInvalidDay(true);
+            }
+        } else {
+            console.log("SET INVALID DAY TO FALSE.");
+            setInvalidDay(false);
+        }
+    }
+
+    const stripZeros = (date) => {
+        if (date.charAt(0) == "0") {
+            console.log('date begins with ZERO.');
+            let newDate = date.slice(1);
+            console.log('newDate: ', newDate);
+            return newDate;
+        } else {
+            return date;
+        }
+    }
+
+    const checkDateInput = () => {
+        if (invalidDay || invalidMonth) {
+            return;
+        } else {
+            navigation.navigate('HomeScreen', { month: stripZeros(month), day: stripZeros(day) });
+        }
+    }
+
+    return (
+        <View style={{ flex: 1, alignItems: 'center', marginTop: '50%' }}>
+            <View style={{
+                width: '80%', marginBottom: 30, display: 'flex', alignItems: 'center',
+                padding: 10, borderColor: '#FF69B4', borderEndColor: '#000', borderLeftWidth: 4
+            }}>
+                <Text style={{ fontSize: 20 }}>To see events from a particular day,
+                enter numerical values for the month and day.</Text>
+            </View>
+
+            {invalidMonth &&
+                <View style={[{ width: '80%', marginBottom: 30, backgroundColor: '#FFF', display: 'flex', alignItems: 'center', padding: 10 }, styles.redButton]}>
+                    <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID MONTH</Text>
+                </View>
+            }
+
+            {invalidDay &&
+                <View style={[{ width: '80%', marginBottom: 30, backgroundColor: '#FFF', display: 'flex', alignItems: 'center', padding: 10 }, styles.redButton]}>
+                    <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID DAY</Text>
+                </View>
+            }
+
+            <View style={{
+                display: 'flex', flexDirection: 'row',
+                justifyContent: 'center', width: '100%'
+            }}>
+
+                <View style={{ display: 'flex', alignItems: 'center', marginRight: '25%' }}>
+                    <Text style={{ fontSize: 18 }}>Month</Text>
+                    <Text style={{ fontSize: 16 }}>1-12</Text>
+                </View>
+                <View style={{ display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 18 }}>Day</Text>
+                    <Text style={{ fontSize: 16 }}>##</Text>
+                </View>
+            </View>
+            <View style={{
+                display: 'flex', flexDirection: 'row',
+                justifyContent: 'center', width: '100%',
+                marginTop: '4%', alignItems: 'center'
+            }}>
+                <TextInput style={{
+                    width: 100, height: 50,
+                    borderRadius: 14, marginRight: '10%', borderColor: '#1dacd6',
+                    borderWidth: 4, backgroundColor: '#FFF'
+                }}
+                    name="month"
+                    keyboardType="number-pad"
+                    textAlign="center"
+                    maxLength={2}
+                    fontSize={24}
+                    value={month}
+                    onChangeText={setMonth}
+                />
+                <TextInput style={{
+                    width: 100, height: 50,
+                    borderRadius: 14, borderColor: '#1dacd6',
+                    borderWidth: 4, backgroundColor: '#FFF'
+                }}
+                    name="day"
+                    keyboardType="number-pad"
+                    textAlign="center"
+                    maxLength={2}
+                    fontSize={24}
+                    value={day}
+                    onChangeText={setDay}
+                />
+            </View>
+            <View style={{ width: '100%', display: 'flex', marginTop: 30, flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableOpacity style={[{ marginRight: 20 }, styles.signInButton, styles.buttonLength, styles.blueBackground]}
+                    onPress={checkDateInput}
+                >
+                    <Text style={[styles.buttonText, styles.alignSelfCenter]}>Select</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles.signInButton, styles.buttonLength, styles.blueBackground]}
+                    onPress={() => navigation.goBack()}>
+                    <Text style={[styles.buttonText, styles.alignSelfCenter]}>Dismiss</Text>
+                </TouchableOpacity>
+            </View >
+        </View >
+    )
+}
+
 export const VisitorScreen = () => {
+    const [day, setDay] = useState(new Date().getDate());
+    const [month, setMonth] = useState(new Date().getMonth() + 1);
+
     return (
         <ScrollView style={{ backgroundColor: '#FEF2F8' }}>
             <VisitorHeader screenName='Signin' />
-            <InfoCard />
+            <InfoCard daySelect={day} monthSelect={month} />
         </ScrollView>
     );
 }
 
-export const FavoritesScreen = () => {
-    return (
-        <View>
-            <Text style={styles.resourceTitle}>Your Favorites</Text>
-            <InfoCard />
-        </View>
-    );
-}
+// export const FavoritesScreen = () => {
+//     console.log('FavScreen has loaded!');
+
+//     return (
+//         <View>
+//             <Text style={styles.resourceTitle}>Your Favorites</Text>
+//             <InfoCard />
+//         </View>
+//     );
+// }
 
 export const ResourceScreen = () => {
     return (
@@ -192,7 +404,7 @@ export const ContactScreen = () => {
                         <Text style={styles.resourceTitle}>Contact Us</Text>
                         <Text style={styles.resourceText}>To contact us regarding issues with your account,
                         to tell us about an event in history we should add,
-                or anything else, please contact ___@gmail.com.</Text>
+                            or anything else, please contact mbchambliss@gmail.com.</Text>
                         <Text style={styles.resourceText}>Thank you for supporting the app!</Text>
                     </View>
                 </LinearGradient>
@@ -275,13 +487,12 @@ export const AccountScreen = ({ navigation }) => {
 }
 
 export const ForgotPasswordScreen = ({ navigation }) => {
-
     const [email, setEmail] = useState("");
 
     const handlePasswordReset = async () => {
         await sendPasswordResetEmail(auth, email)
             .then(() => {
-                alert("Momentarily you should receive an email to reset your password.");
+                alert("In a few moments you should receive an email to reset your password.");
                 navigation.replace("SigninScreen")
             }).catch(error => {
                 let message = error.message
@@ -310,7 +521,7 @@ export const ForgotPasswordScreen = ({ navigation }) => {
                     onChangeText={text => setEmail(text)}
                 />
 
-                <TouchableOpacity style={[styles.signInButtonLong, styles.alignSelfCenter]}
+                <TouchableOpacity style={[styles.signInButton, styles.buttonLengthLong, styles.blueBackground, styles.alignSelfCenter]}
                     onPress={handlePasswordReset}
                 >
                     <Text style={[styles.btnText, styles.alignSelfCenter]}>Send</Text>
@@ -321,18 +532,16 @@ export const ForgotPasswordScreen = ({ navigation }) => {
     );
 }
 
-export const SplashScreen = () => {
-    const navigation = useNavigation();
+export const SplashScreen = ({ navigation }) => {
     const [user, setUser] = useState(auth.currentUser);
-
-    console.log('Splash user: ', user);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                console.log("SPLASH: Should go to Home screen.");
-                console.log('useEffect Splash user: ', user);
-                navigation.navigate('LoggedIn');
+                console.log("User is signed in.");
+                setTimeout(() => {
+                    navigation.navigate('LoggedIn', { screen: 'Home' });
+                }, 2000);
             } else {
                 navigation.navigate('Signin');
             }
@@ -341,11 +550,8 @@ export const SplashScreen = () => {
     }, [user])
 
     return (
-        <View style={{ height: '100%', backgroundColor: 'blue' }}>
-            <Image
-                style={{ width: 190, height: 190 }}
-                source={require('./assets/updated_logo_no_background.png')}
-            />
+        <View style={[{ justifyContent: 'center', backgroundColor: '#000' }, styles.flexOne]}>
+            <ActivityIndicator size="large" color="#FAC7ED" />
         </View>
     )
 }
@@ -361,8 +567,7 @@ export const SigninScreen = () => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                console.log("IN SIGN IN - Go to Home");
-                console.log("USER LOGGED IN: ", user);
+                console.log("USER LOGGED IN! Go to Home.");
                 navigation.navigate('LoggedIn');
             }
         })
@@ -392,9 +597,6 @@ export const SigninScreen = () => {
     const handleLogin = async () => {
         try {
             const signIn = await signInWithEmailAndPassword(auth, email, password);
-            if (signIn.user) {
-                console.log("signIn variable IF");
-            }
         } catch (error) {
             let message = error.message;
             if (message.includes("auth/internal-error") && password.length === 0) {
@@ -425,7 +627,7 @@ export const SigninScreen = () => {
                 }}
             >
                 <View style={[styles.flexDisplayJustifyCenter, styles.alignCenter]}>
-                    <View style={styles.warning_modal}>
+                    <View style={[styles.blueBackground, styles.warning_modal]}>
                         <Text>TESTING</Text>
                     </View>
                 </View>
@@ -455,14 +657,14 @@ export const SigninScreen = () => {
                         onChangeText={(text) => setPassword(text)}
                     />
                     <View style={[styles.buttonContainerSignIn, styles.flexRow]}>
-                        <TouchableOpacity style={[styles.signInButton, styles.alignSelfCenter]}
+                        <TouchableOpacity style={[styles.signInButton, styles.buttonLength, styles.blueBackground, styles.alignSelfCenter]}
                             onPress={handleLogin}
                         // onPress={() => navigation.navigate('Home')}
                         >
                             <Text style={[styles.btnText, styles.alignSelfCenter]}>Sign In</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.signInButton, styles.alignSelfCenter]}
+                        <TouchableOpacity style={[styles.signInButton, styles.buttonLength, styles.blueBackground, styles.alignSelfCenter]}
                             onPress={handleSignUp}
                         >
                             <Text style={[styles.btnText, styles.alignSelfCenter]}>Register</Text>
@@ -484,51 +686,5 @@ export const SigninScreen = () => {
                 </View>
             </View>
         </KeyboardAvoidingView >
-    )
-}
-
-export const SignupScreen = () => {
-    return (
-        <View style={styles.flexDisplayJustifyCenter, styles.flexOne}>
-            <Text style={[styles.feedback, styles.alignSelfCenter]}>SIGN UP</Text>
-            <Text style={styles.text}>First</Text>
-            <TextInput style={styles.textInput}
-                name="first"
-            />
-            <Text style={styles.text}>Last</Text>
-            <TextInput style={styles.textInput}
-                name="last"
-            />
-            <Text style={styles.text}>Email</Text>
-            <TextInput style={styles.textInput}
-                name="email"
-            />
-            <Text style={styles.text}>Password</Text>
-            <TextInput style={styles.textInput}
-                name="password"
-            />
-
-            <Text style={styles.text}>Confirm Password</Text>
-            <TextInput style={styles.textInput}
-                name="confirmPassword"
-            />
-
-            <TouchableOpacity style={[styles.button, styles.alignSelfCenter]}>
-                <Text style={[styles.btnText, styles.alignSelfCenter]}>Submit</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={[styles.button, styles.alignSelfCenter]}>
-                <Text style={[styles.btnText, styles.alignSelfCenter]}>Google Sign In</Text>
-            </TouchableOpacity>
-
-            <View style={[styles.signin, styles.flexRow]}>
-                <Text style={styles.already}>Already a user?</Text>
-                <Text
-                    style={styles.alreadyBtnText}
-                    onPress={() => { navigation.push('SigninScreen') }}>
-                    Sign In
-                    </Text>
-            </View>
-        </View >
     )
 }
