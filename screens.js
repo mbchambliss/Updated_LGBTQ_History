@@ -51,6 +51,8 @@ export const HomeScreen = ({ route }) => {
     const [daySelect, setDaySelect] = useState(new Date().getDate());
     const [monthSelect, setMonthSelect] = useState(new Date().getMonth() + 1);
 
+    let today = parseInt(new Date().getMonth() + 1) + " / " + parseInt(new Date().getDate());
+
     const checkRouteParamsForDate = (daySelect, monthSelect, route) => {
         if (route.params) {
             if (route.params['day'] !== "" || route.params['day'] !== undefined) {
@@ -85,7 +87,7 @@ export const HomeScreen = ({ route }) => {
                 <ScrollView showsVerticalScrollIndicator={false} style={{ height: '92%' }}>
                     <InfoCard daySelect={daySelect} monthSelect={monthSelect} />
                 </ScrollView>
-                {(daySelect != new Date().getDate() && monthSelect != new Date().getMonth() + 1) &&
+                {(today != (monthSelect + " / " + daySelect)) &&
                     <View style={[styles.alignCenter, {
                         shadowColor: '#FFF',
                         shadowOffset: { width: 1, height: 1 },
@@ -133,7 +135,6 @@ export const DateSelectScreen = ({ navigation }) => {
 
     const checkValidMonth = () => {
         if (parseInt(month) == 0 || parseInt(month) > 12 || month == null) {
-            console.log("This month is not valid.");
             setInvalidMonth(true);
         } else {
             setInvalidMonth(false);
@@ -146,34 +147,27 @@ export const DateSelectScreen = ({ navigation }) => {
         }
 
         if (parseInt(day) == 0) {
-            console.log("This day is not valid.");
             setInvalidDay(true);
         } else if (parseInt(month) == 2) {
             if (parseInt(day) > 29) {
-                console.log("This day is not valid.");
                 setInvalidDay(true);
             }
         } else if (parseInt(month) == 4 || parseInt(month) == 6 || parseInt(month) == 9 || parseInt(month) == 11) {
             if (parseInt(day) > 30) {
-                console.log("This day is not valid.");
                 setInvalidDay(true);
             }
         } else if (parseInt(month) == 1 || parseInt(month) == 3 || parseInt(month) == 5 || parseInt(month) == 7 || parseInt(month) == 8 || parseInt(month) == 10 || parseInt(month) == 12) {
             if (parseInt(day) > 31) {
-                console.log("This day is not valid.");
                 setInvalidDay(true);
             }
         } else {
-            console.log("SET INVALID DAY TO FALSE.");
             setInvalidDay(false);
         }
     }
 
     const stripZeros = (date) => {
         if (date.charAt(0) == "0") {
-            console.log('date begins with ZERO.');
             let newDate = date.slice(1);
-            console.log('newDate: ', newDate);
             return newDate;
         } else {
             return date;
