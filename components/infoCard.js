@@ -5,14 +5,18 @@ import styles from '../stylesheets/infocard_styles';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import defaultEvents from '../events/default_events.json';
-import { auth } from '../firebase';
+import { Oswald_400Regular } from '@expo-google-fonts/oswald';
+import { useFonts, Neuton_400Regular } from '@expo-google-fonts/neuton';
 
 
 function InfoCard({ daySelect, monthSelect }) {
 
-	console.log('InfoCard date details (M/D): ', monthSelect.toString(), "/", daySelect.toString());
-
 	const [events, setEvents] = useState([]);
+
+	let [fontsLoaded] = useFonts({
+		Oswald_400Regular,
+		Neuton_400Regular
+	});
 
 	useEffect(() => {
 		const getEvents = async () => {
@@ -41,17 +45,22 @@ function InfoCard({ daySelect, monthSelect }) {
 							end={{ x: 0.3, y: 1.0 }}
 							style={styles.card_details}
 						> */}
-						<Text style={styles.title}>{event.title}</Text>
-						<Text style={styles.content}>{event.date}</Text>
-						<Text style={styles.content}>{event.short_desc}</Text>
-						{event.extra.length > 0 &&
-							<Text style={styles.content}>{event.extra}</Text>
-						}
-						<View style={styles.align}>
-							<View style={styles.more}>
-								<Text style={styles.moreText}
-									onPress={() => Linking.openURL(event.link)}>More Info</Text>
-								{/* {auth.currentUser != null &&
+						<View style={{ backgroundColor: '#FAC7ED', width: '55%', marginLeft: '45%', marginBottom: 12, height: 44, borderWidth: 2, borderColor: '#FAC7ED', borderTopRightRadius: 14, borderBottomLeftRadius: 14 }}>
+							<Text style={[styles.content, { fontFamily: 'Oswald_400Regular', fontSize: 19, color: '#09417D' }]}>{event.date}</Text>
+						</View>
+						<View style={{ paddingHorizontal: 18 }}>
+							<Text style={[styles.title, { fontFamily: 'Oswald_400Regular', fontSize: 26 }]}>{event.title}</Text>
+							<View style={{ backgroundColor: '#FAC7ED', marginTop: 8, marginHorizontal: '20%', height: 2, borderWidth: 1, borderColor: '#FAC7ED' }}>
+							</View>
+							<Text style={[styles.content, { fontFamily: 'Neuton_400Regular', fontSize: 22, lineHeight: 26 }]}>{event.short_desc}</Text>
+							{event.extra.length > 0 &&
+								<Text style={[styles.content, { fontFamily: 'Neuton_400Regular', fontSize: 21 }]}>{event.extra}</Text>
+							}
+							<View style={styles.align}>
+								<View style={styles.more}>
+									<Text style={styles.moreText}
+										onPress={() => Linking.openURL(event.link)}>More Info</Text>
+									{/* {auth.currentUser != null &&
 								<Icon.Button
 									name="heart-outline"
 									textAlign="center"
@@ -60,6 +69,7 @@ function InfoCard({ daySelect, monthSelect }) {
 									size={20}
 								/>
 							} */}
+								</View>
 							</View>
 						</View>
 						{/* </LinearGradient> */}

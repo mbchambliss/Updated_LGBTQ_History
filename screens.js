@@ -271,10 +271,20 @@ export const VisitorScreen = () => {
     const [month, setMonth] = useState(new Date().getMonth() + 1);
 
     return (
-        <ScrollView style={{ backgroundColor: '#FEF2F8' }}>
+        <View style={{ flex: 1, height: '100%' }}>
             <VisitorHeader screenName='Signin' />
-            <InfoCard daySelect={day} monthSelect={month} />
-        </ScrollView>
+            <View style={{ height: '3%' }}></View>
+            <LinearGradient
+                colors={['#398ff4', '#f762a3']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={styles.margin_block}
+            >
+                <ScrollView style={{ height: '95%' }}>
+                    <InfoCard daySelect={day} monthSelect={month} />
+                </ScrollView>
+            </LinearGradient>
+        </View>
     );
 }
 
@@ -301,6 +311,21 @@ export const ResourceScreen = () => {
                     end={{ x: 0.1, y: 0.9 }}
                     style={styles.resources_block}
                 >
+                    <Text style={styles.resourceTitle}>ABORTION</Text>
+                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                        onPress={() => Linking.openURL('https://abortionfunds.org/need-abortion/')}>
+                        National Network of Abortion Funds</Text>
+                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                        onPress={() => Linking.openURL('https://brigidalliance.org/')}>
+                        The Brigid Alliance</Text>
+                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                        onPress={() => Linking.openURL('https://blackrj.org/')}>
+                        National Black Women’s Reproductive Justice Agenda</Text>
+                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                        onPress={() => Linking.openURL('https://janesdueprocess.org/about/')}>
+                        Jane's Due Process (Texas)</Text>
+
+
                     <Text style={styles.resourceTitle}>POLITICAL</Text>
                     <Text style={[styles.secondaryResourceText, styles.pink_line]}
                         onPress={() => Linking.openURL('http://www.equalityfederation.org/')}>
@@ -399,6 +424,7 @@ export const ContactScreen = () => {
                         <Text style={styles.resourceText}>To contact us regarding issues with your account,
                         to tell us about an event in history we should add,
                             or anything else, please contact mbchambliss@gmail.com.</Text>
+                        <Text style={styles.resourceText}>If you are contacting about an event or historical queer figure, please include as much details as possible, including any dates or links to research.</Text>
                         <Text style={styles.resourceText}>Thank you for supporting the app!</Text>
                     </View>
                 </LinearGradient>
@@ -436,12 +462,12 @@ export const AccountScreen = ({ navigation }) => {
                 >
                     <Image style={styles.photo} source={require('./assets/marsha-cropped.jpg')} />
                     <Text style={styles.name}> {auth_email}</Text>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={[styles.opac, styles.flexDisplayJustifyCenter]}
                         onPress={() => navigation.push('FavoritesScreen')}
                     >
                         <Text style={[styles.buttonText, styles.alignSelfCenter]}>My Favorites</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     {/* <TouchableOpacity style={[styles.opac, styles.flexDisplayJustifyCenter]}>
                     <Text style={[styles.buttonText, styles.alignSelfCenter]}>Edit Profile</Text>

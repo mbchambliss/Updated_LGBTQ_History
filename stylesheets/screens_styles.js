@@ -267,9 +267,4 @@ export default StyleSheet.create({
         marginTop: 10,
         padding: 8
     }
-    // warning_modal: {
-    //     width: 300,
-    //     height: 300,
-    //     opacity: .6
-    // }
 });
