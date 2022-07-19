@@ -4,7 +4,6 @@ export default StyleSheet.create({
     testInfoCardColors: {
         backgroundColor: '#09417D',
         borderRadius: 20,
-        padding: 5,
     },
     card: {
         width: '92%',

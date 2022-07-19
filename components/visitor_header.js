@@ -22,7 +22,7 @@ function VisitorHeader({ screenName }) {
                 size={24}
                 width={60}
                 height={80}
-                backgroundColor="#FEF2F8"
+                backgroundColor="#F4F5F0"
                 onPress={() => navigation.navigate(screenName)}
             />
         </View>
