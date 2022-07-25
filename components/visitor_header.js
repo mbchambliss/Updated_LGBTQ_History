@@ -9,22 +9,27 @@ function VisitorHeader({ screenName }) {
 
     return (
         <View style={styles.headerContainer}>
-            <View style={{ width: 60 }}></View>
-            <Image
-                style={{
-                    width: 90, height: 90
-                }}
-                source={require('../assets/updated_logo_no_background.png')}
-            />
-            <AntIcon.Button
-                name="login"
-                color="#F48FB1"
-                size={24}
-                width={60}
-                height={80}
-                backgroundColor="#F4F5F0"
-                onPress={() => navigation.navigate(screenName)}
-            />
+            <View style={{ width: '33%' }}></View>
+            <View style={{ width: '33%', alignItems: 'center' }}>
+                <Image
+                    style={{
+                        width: 90, height: 90
+                    }}
+                    source={require('../assets/updated_logo_no_background.png')}
+                />
+            </View>
+
+            {screenName != '' &&
+                <View style={{ width: '33%', height: 90, alignItems: 'flex-end', justifyContent: 'center' }}>
+                    <AntIcon.Button
+                        name="login"
+                        color="#F48FB1"
+                        size={28}
+                        backgroundColor="#F4F5F0"
+                        onPress={() => navigation.navigate(screenName)}
+                    />
+                </View>
+            }
         </View>
     );
 }

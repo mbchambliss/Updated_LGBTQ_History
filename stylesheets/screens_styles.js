@@ -1,8 +1,13 @@
 import { StyleSheet } from 'react-native';
 
+// COLORS
+// BLUE: '#1DACD6'
+// PINK: '#FF69B4'
+// LIGHT GRAY: '#F4F5F0'
+
 export default StyleSheet.create({
     about: {
-        paddingTop: '10%'
+        marginTop: '6%'
     },
     alignCenter: {
         alignItems: 'center'
@@ -68,6 +73,14 @@ export default StyleSheet.create({
         textShadowColor: '#000',
         fontWeight: 'bold',
         fontSize: 20
+    },
+    dateWarning: {
+        width: '80%',
+        marginBottom: 30,
+        backgroundColor: '#FFF',
+        display: 'flex',
+        alignItems: 'center',
+        padding: 10
     },
     feedback: {
         fontWeight: 'bold',
@@ -219,7 +232,7 @@ export default StyleSheet.create({
     },
     signInTitle: {
         marginTop: '20%',
-        marginBottom: '30%',
+        marginBottom: '10%',
         fontWeight: 'bold',
         color: '#FF69B4',
         fontSize: 40,
@@ -229,13 +242,18 @@ export default StyleSheet.create({
     },
     signInText: {
         fontSize: 22,
-        marginLeft: '10%',
-        marginBottom: '2%',
         color: '#FF69B4',
         fontWeight: 'bold',
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 1 },
         textShadowColor: '#000',
+        backgroundColor: '#F4F5F0'
+    },
+    signInTextContainer: {
+        marginLeft: '12%',
+        marginBottom: '-3%',
+        zIndex: 99,
+        flexDirection: 'row'
     },
     text: {
         fontSize: 18,
@@ -249,13 +267,15 @@ export default StyleSheet.create({
     },
     textInput: {
         width: '75%',
-        height: 30,
+        height: 60,
         borderColor: '#1dacd6',
-        borderBottomWidth: 2,
+        borderWidth: 2,
         borderRadius: 5,
         marginLeft: '10%',
-        paddingLeft: 5,
+        paddingLeft: 12,
         marginBottom: '8%',
+        fontFamily: 'Arial',
+        fontSize: 20
     },
     textMargin: {
         marginTop: '15%',

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import {
-    View, KeyboardAvoidingView, Text, TextInput,
-    ScrollView, Image, TouchableOpacity, Linking,
-    ActivityIndicator
+    View, Keyboard, KeyboardAvoidingView, Text, TextInput,
+    ScrollView, Image, TouchableOpacity, TouchableWithoutFeedback,
+    Linking, ActivityIndicator
 } from 'react-native';
 import InfoCard from './components/infoCard';
 import VisitorHeader from './components/visitor_header';
@@ -18,17 +18,16 @@ import {
 export const AboutScreen = () => {
     return (
         <View>
-            <View style={{ height: 20, backgroundColor: '#fcedfc' }}></View>
             <View style={{ height: '100%' }}>
                 <LinearGradient
                     colors={['#398ff4', '#f762a3']}
                     locations={[0.1, 1]}
                     start={{ x: 0.1, y: 0.1 }}
                     end={{ x: 0.1, y: 0.9 }}
-                    style={[styles.resourceBlock, styles.about, styles.flexOne]}>
-                    <View>
-                        <Text style={styles.resourceTitle}>ABOUT QUEERSTORY</Text>
-                        <Text style={[styles.resourceText, styles.first_resource]}>Queerstory is meant to be utilized as an educational resource to
+                    style={[styles.about, styles.flexOne]}>
+                    <ScrollView>
+                        <Text style={styles.resourceTitle}>ABOUT</Text>
+                        <Text style={[styles.resourceText, styles.first_resource]}>Queer Moments (in History) is meant to be utilized as an educational resource to
                           learn about important, momentous figures and events in LGBTQ+ history.</Text>
                         <Text style={styles.resourceText}>From the Holocaust to Stonewall. Socrates to RuPaul. LGBTQ+ history is embedded
                         throughout all areas of history. They were scholars, royals, scientists, samurais,
@@ -40,7 +39,7 @@ export const AboutScreen = () => {
                         <Text style={styles.resourceText}>“It is absolutely imperative that every human being’s freedom and human rights
                           are respected, all over the world.” </Text>
                         <Text style={styles.resourceText}>–Jóhanna Sigurðardóttir</Text>
-                    </View>
+                    </ScrollView>
                 </LinearGradient >
             </View>
         </View>
@@ -183,84 +182,94 @@ export const DateSelectScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', marginTop: '50%' }}>
-            <View style={{
-                width: '80%', marginBottom: 30, display: 'flex', alignItems: 'center',
-                padding: 10, borderColor: '#FF69B4', borderEndColor: '#000', borderLeftWidth: 4
-            }}>
-                <Text style={{ fontSize: 20 }}>To see events from a particular day,
-                enter numerical values for the month and day.</Text>
-            </View>
+        <View>
+            <View style={{ height: '100%' }}>
+                <LinearGradient
+                    colors={['#398ff4', '#f762a3']}
+                    locations={[0.1, 1]}
+                    start={{ x: 0.1, y: 0.1 }}
+                    end={{ x: 0.1, y: 0.9 }}
+                    style={[styles.about, styles.flexOne]}>
+                    <View style={[styles.about, { flex: 1, alignItems: 'center' }]}>
+                        <View style={{
+                            width: '80%', marginBottom: 30, display: 'flex', alignItems: 'center',
+                            padding: 10, borderColor: '#FF69B4', borderEndColor: '#000', borderLeftWidth: 4
+                        }}>
+                            <Text style={{ fontSize: 20 }}>To see Queer Moments from a particular day, enter numerical values for the month and day.</Text>
+                        </View>
 
-            {invalidMonth &&
-                <View style={[{ width: '80%', marginBottom: 30, backgroundColor: '#FFF', display: 'flex', alignItems: 'center', padding: 10 }, styles.redButton]}>
-                    <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID MONTH</Text>
-                </View>
-            }
+                        {invalidMonth &&
+                            <View style={[styles.dateWarning, styles.redButton]}>
+                                <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID MONTH</Text>
+                            </View>
+                        }
 
-            {invalidDay &&
-                <View style={[{ width: '80%', marginBottom: 30, backgroundColor: '#FFF', display: 'flex', alignItems: 'center', padding: 10 }, styles.redButton]}>
-                    <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID DAY</Text>
-                </View>
-            }
+                        {invalidDay &&
+                            <View style={[styles.dateWarning, styles.redButton]}>
+                                <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID DAY</Text>
+                            </View>
+                        }
 
-            <View style={{
-                display: 'flex', flexDirection: 'row',
-                justifyContent: 'center', width: '100%'
-            }}>
+                        <View style={{
+                            display: 'flex', flexDirection: 'row',
+                            justifyContent: 'center', width: '100%'
+                        }}>
 
-                <View style={{ display: 'flex', alignItems: 'center', marginRight: '25%' }}>
-                    <Text style={{ fontSize: 18 }}>Month</Text>
-                    <Text style={{ fontSize: 16 }}>1-12</Text>
-                </View>
-                <View style={{ display: 'flex', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 18 }}>Day</Text>
-                    <Text style={{ fontSize: 16 }}>##</Text>
-                </View>
-            </View>
-            <View style={{
-                display: 'flex', flexDirection: 'row',
-                justifyContent: 'center', width: '100%',
-                marginTop: '4%', alignItems: 'center'
-            }}>
-                <TextInput style={{
-                    width: 100, height: 50,
-                    borderRadius: 14, marginRight: '10%', borderColor: '#1dacd6',
-                    borderWidth: 4, backgroundColor: '#FFF'
-                }}
-                    name="month"
-                    keyboardType="number-pad"
-                    textAlign="center"
-                    maxLength={2}
-                    fontSize={24}
-                    value={month}
-                    onChangeText={setMonth}
-                />
-                <TextInput style={{
-                    width: 100, height: 50,
-                    borderRadius: 14, borderColor: '#1dacd6',
-                    borderWidth: 4, backgroundColor: '#FFF'
-                }}
-                    name="day"
-                    keyboardType="number-pad"
-                    textAlign="center"
-                    maxLength={2}
-                    fontSize={24}
-                    value={day}
-                    onChangeText={setDay}
-                />
-            </View>
-            <View style={{ width: '100%', display: 'flex', marginTop: 30, flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableOpacity style={[{ marginRight: 20 }, styles.signInButton, styles.buttonLength, styles.blueBackground]}
-                    onPress={checkDateInput}
-                >
-                    <Text style={[styles.buttonText, styles.alignSelfCenter]}>Select</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.signInButton, styles.buttonLength, styles.blueBackground]}
-                    onPress={() => navigation.goBack()}>
-                    <Text style={[styles.buttonText, styles.alignSelfCenter]}>Dismiss</Text>
-                </TouchableOpacity>
+                            <View style={{ display: 'flex', alignItems: 'center', marginRight: '25%' }}>
+                                <Text style={{ fontSize: 18 }}>Month</Text>
+                                <Text style={{ fontSize: 16 }}>1-12</Text>
+                            </View>
+                            <View style={{ display: 'flex', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 18 }}>Day</Text>
+                                <Text style={{ fontSize: 16 }}>##</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            display: 'flex', flexDirection: 'row',
+                            justifyContent: 'center', width: '100%',
+                            marginTop: '4%', alignItems: 'center'
+                        }}>
+                            <TextInput style={{
+                                width: 100, height: 50,
+                                borderRadius: 14, marginRight: '10%', borderColor: '#1dacd6',
+                                borderWidth: 4, backgroundColor: '#FFF'
+                            }}
+                                name="month"
+                                keyboardType="number-pad"
+                                textAlign="center"
+                                maxLength={2}
+                                fontSize={24}
+                                value={month}
+                                onChangeText={setMonth}
+                            />
+                            <TextInput style={{
+                                width: 100, height: 50,
+                                borderRadius: 14, borderColor: '#1dacd6',
+                                borderWidth: 4, backgroundColor: '#FFF'
+                            }}
+                                name="day"
+                                keyboardType="number-pad"
+                                textAlign="center"
+                                maxLength={2}
+                                fontSize={24}
+                                value={day}
+                                onChangeText={setDay}
+                            />
+                        </View>
+                        <View style={{ width: '100%', display: 'flex', marginTop: 30, flexDirection: 'row', justifyContent: 'center' }}>
+                            <TouchableOpacity style={[{ marginRight: 20 }, styles.signInButton, styles.buttonLength, styles.blueBackground]}
+                                onPress={checkDateInput}
+                            >
+                                <Text style={[styles.buttonText, styles.alignSelfCenter]}>Select</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.signInButton, styles.buttonLength, styles.blueBackground]}
+                                onPress={() => navigation.goBack()}>
+                                <Text style={[styles.buttonText, styles.alignSelfCenter]}>Dismiss</Text>
+                            </TouchableOpacity>
+                        </View >
+                    </View >
+                </LinearGradient>
             </View >
         </View >
     )
@@ -288,121 +297,111 @@ export const VisitorScreen = () => {
     );
 }
 
-// export const FavoritesScreen = () => {
-//     console.log('FavScreen has loaded!');
-
-//     return (
-//         <View>
-//             <Text style={styles.resourceTitle}>Your Favorites</Text>
-//             <InfoCard />
-//         </View>
-//     );
-// }
-
 export const ResourceScreen = () => {
     return (
         <View>
-            <View style={{ height: 20, backgroundColor: '#fcedfc' }}></View>
-            <ScrollView>
+            <View style={{ height: '100%' }}>
                 <LinearGradient
                     colors={['#398ff4', '#f762a3']}
                     locations={[0.1, 1]}
                     start={{ x: 0.1, y: 0.1 }}
                     end={{ x: 0.1, y: 0.9 }}
-                    style={styles.resources_block}
+                    style={[styles.about, styles.resources_block]}
                 >
-                    <Text style={styles.resourceTitle}>ABORTION</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://abortionfunds.org/need-abortion/')}>
-                        National Network of Abortion Funds</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://brigidalliance.org/')}>
-                        The Brigid Alliance</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://blackrj.org/')}>
-                        National Black Women’s Reproductive Justice Agenda</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://janesdueprocess.org/about/')}>
-                        Jane's Due Process (Texas)</Text>
+                    <ScrollView>
+                        <Text style={styles.resourceTitle}>ABORTION</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://abortionfunds.org/need-abortion/')}>
+                            National Network of Abortion Funds</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://brigidalliance.org/')}>
+                            The Brigid Alliance</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://blackrj.org/')}>
+                            National Black Women’s Reproductive Justice Agenda</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://janesdueprocess.org/about/')}>
+                            Jane's Due Process (Texas)</Text>
 
 
-                    <Text style={styles.resourceTitle}>POLITICAL</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('http://www.equalityfederation.org/')}>
-                        Equality Federation</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://www.hrc.org/')}>
-                        Human Rights Campaign</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://www.thetaskforce.org/')}>
-                        National LGBTQ Task Force</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://victoryfund.org/')}>
-                        Victory Fund</Text>
+                        <Text style={styles.resourceTitle}>POLITICAL</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('http://www.equalityfederation.org/')}>
+                            Equality Federation</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://www.hrc.org/')}>
+                            Human Rights Campaign</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://www.thetaskforce.org/')}>
+                            National LGBTQ Task Force</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://victoryfund.org/')}>
+                            Victory Fund</Text>
 
 
-                    <Text style={styles.resourceTitle}>YOUTH</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://www.glsen.org/')}>
-                        Gay, Lesbian, and Straight Education Network</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://www.accreditedschoolsonline.org/resources/lgbtq-student-support/')}>
-                        LGBTQ Student Resources & Support</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://gsanetwork.org/')}>
-                        GSA Network</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://pointfoundation.org/')}>
-                        Point Foundation</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('http://safeschoolscoalition.org/')}>
-                        Safe Schools Coalition</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('https://www.thetrevorproject.org/')}>
-                        The Trevor Project</Text>
+                        <Text style={styles.resourceTitle}>YOUTH</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://www.glsen.org/')}>
+                            Gay, Lesbian, and Straight Education Network</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://www.accreditedschoolsonline.org/resources/lgbtq-student-support/')}>
+                            LGBTQ Student Resources & Support</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://gsanetwork.org/')}>
+                            GSA Network</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://pointfoundation.org/')}>
+                            Point Foundation</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('http://safeschoolscoalition.org/')}>
+                            Safe Schools Coalition</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('https://www.thetrevorproject.org/')}>
+                            The Trevor Project</Text>
 
-                    <Text style={styles.resourceTitle}>BISEXUAL</Text>
-                    <Text style={[styles.secondaryResourceText, styles.pink_line]}
-                        onPress={() => Linking.openURL('http://www.biresource.net/')}>
-                        Bisexual Resource Center</Text>
+                        <Text style={styles.resourceTitle}>BISEXUAL</Text>
+                        <Text style={[styles.secondaryResourceText, styles.pink_line]}
+                            onPress={() => Linking.openURL('http://www.biresource.net/')}>
+                            Bisexual Resource Center</Text>
 
-                    <Text style={styles.resourceTitle}>TRANSGENDER</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://transequality.org/')}>
-                        National Center for Transgender Equality (NCTE)</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://srlp.org/')}>
-                        Sylvia Rivera Law Project</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://transgenderlawcenter.org/')}>
-                        Transgender Law Center</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://www.transgenderlegal.org/')}>
-                        Transgender Legal Defense & Education Fund</Text>
+                        <Text style={styles.resourceTitle}>TRANSGENDER</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://transequality.org/')}>
+                            National Center for Transgender Equality (NCTE)</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://srlp.org/')}>
+                            Sylvia Rivera Law Project</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://transgenderlawcenter.org/')}>
+                            Transgender Law Center</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://www.transgenderlegal.org/')}>
+                            Transgender Legal Defense & Education Fund</Text>
 
-                    <Text style={styles.resourceTitle}>LEGAL</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://www.aclu.org/issues/lgbt-rights?redirect=lgbt-rights')}>
-                        ACLU</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://www.lambdalegal.org/')}>
-                        Lambda Legal</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://lgbtbar.org/')}>
-                        The LGBT Bar</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://www.nclrights.org/')}>
-                        National Center for Lesbian Rights (NCLR)</Text>
+                        <Text style={styles.resourceTitle}>LEGAL</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://www.aclu.org/issues/lgbt-rights?redirect=lgbt-rights')}>
+                            ACLU</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://www.lambdalegal.org/')}>
+                            Lambda Legal</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://lgbtbar.org/')}>
+                            The LGBT Bar</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://www.nclrights.org/')}>
+                            National Center for Lesbian Rights (NCLR)</Text>
 
-                    <Text style={styles.resourceTitle}>PARENTS</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('https://pflag.org/')}>
-                        Parents, Families, and Friends of Lesbians & Gays (PFLAG)</Text>
-                    <Text style={[styles.secondaryResourceText, styles.blue_line]}
-                        onPress={() => Linking.openURL('http://www.straightforequality.org/')}>
-                        Straight For Equality</Text>
+                        <Text style={styles.resourceTitle}>PARENTS</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('https://pflag.org/')}>
+                            Parents, Families, and Friends of Lesbians & Gays (PFLAG)</Text>
+                        <Text style={[styles.secondaryResourceText, styles.blue_line]}
+                            onPress={() => Linking.openURL('http://www.straightforequality.org/')}>
+                            Straight For Equality</Text>
+                    </ScrollView>
                 </LinearGradient>
-            </ScrollView>
+            </View>
         </View>
 
     );
@@ -411,20 +410,19 @@ export const ResourceScreen = () => {
 export const ContactScreen = () => {
     return (
         <View>
-            <View style={{ height: 20, backgroundColor: '#fcedfc' }}></View>
             <View style={{ height: '100%' }}>
                 <LinearGradient
                     colors={['#398ff4', '#f762a3']}
                     locations={[0.1, 1]}
                     start={{ x: 0.1, y: 0.1 }}
                     end={{ x: 0.1, y: 0.9 }}
-                    style={[styles.resourceBlock, styles.about, styles.flexOne]}>
+                    style={[styles.about, styles.flexOne]}>
                     <View>
-                        <Text style={styles.resourceTitle}>Contact Us</Text>
+                        <Text style={styles.resourceTitle}>CONTACT US</Text>
                         <Text style={styles.resourceText}>To contact us regarding issues with your account,
-                        to tell us about an event in history we should add,
-                            or anything else, please contact mbchambliss@gmail.com.</Text>
-                        <Text style={styles.resourceText}>If you are contacting about an event or historical queer figure, please include as much details as possible, including any dates or links to research.</Text>
+                        to tell us about a moment in history,
+                            or anything else, please contact QueerMomentsinHistory@gmail.com.</Text>
+                        <Text style={styles.resourceText}>If you are contacting about a moment or historical queer figure, please include as many details as possible, including any dates or links to research.</Text>
                         <Text style={styles.resourceText}>Thank you for supporting the app!</Text>
                     </View>
                 </LinearGradient>
@@ -528,26 +526,32 @@ export const ForgotPasswordScreen = ({ navigation }) => {
     return (
         <KeyboardAvoidingView>
             <VisitorHeader screenName='Signin' />
-            <Text style={[styles.signInTitle, styles.alignSelfCenter]}>RESET PASSWORD</Text>
+            <TouchableWithoutFeedback
+                onPress={() => Keyboard.dismiss()}>
+                <View>
+                    <Text style={[styles.signInTitle, styles.alignSelfCenter]}>RESET PASSWORD</Text>
 
-            <View style={styles.flexDisplayJustifyCenter}>
+                    <View style={styles.flexDisplayJustifyCenter}>
+                        <View style={styles.signInTextContainer}>
+                            <Text style={styles.signInText}> Email </Text>
+                        </View>
+                        <TextInput style={styles.textInput}
+                            name="email"
+                            id="email"
+                            autoCapitalize="none"
+                            value={email}
+                            onChangeText={text => setEmail(text)}
+                        />
 
-                <Text style={styles.signInText}>Email</Text>
-                <TextInput style={styles.textInput}
-                    name="email"
-                    id="email"
-                    autoCapitalize="none"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                />
+                        <TouchableOpacity style={[styles.signInButton, styles.buttonLengthLong, styles.blueBackground, styles.alignSelfCenter]}
+                            onPress={handlePasswordReset}
+                        >
+                            <Text style={[styles.btnText, styles.alignSelfCenter]}>Send</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.signInButton, styles.buttonLengthLong, styles.blueBackground, styles.alignSelfCenter]}
-                    onPress={handlePasswordReset}
-                >
-                    <Text style={[styles.btnText, styles.alignSelfCenter]}>Send</Text>
-                </TouchableOpacity>
-
-            </View>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
 }
@@ -653,58 +657,67 @@ export const SigninScreen = () => {
                 </View>
 
             </Modal> */}
+            <VisitorHeader screenName='' />
 
-            <Text style={[styles.signInTitle, styles.alignSelfCenter]}>SIGN IN</Text>
+            <TouchableWithoutFeedback
+                onPress={() => Keyboard.dismiss()}>
+                <View>
+                    <Text style={[styles.signInTitle, styles.alignSelfCenter]}>SIGN IN</Text>
 
-            <View style={styles.flexDisplayJustifyCenter}>
+                    <View style={styles.flexDisplayJustifyCenter}>
+                        <View style={styles.flexDisplayJustifyCenter}>
+                            <View style={styles.signInTextContainer}>
+                                <Text style={styles.signInText}> Email </Text>
+                            </View>
+                            <TextInput style={styles.textInput}
+                                name="email"
+                                id="email"
+                                autoCapitalize="none"
+                                value={email}
+                                onChangeText={text => setEmail(text)}
+                            />
 
-                <View style={styles.flexDisplayJustifyCenter}>
-                    <Text style={styles.signInText}>Email</Text>
-                    <TextInput style={styles.textInput}
-                        name="email"
-                        id="email"
-                        autoCapitalize="none"
-                        value={email}
-                        onChangeText={text => setEmail(text)}
-                    />
+                            <View style={styles.signInTextContainer}>
+                                <Text style={styles.signInText}> Password </Text>
+                            </View>
+                            <TextInput style={styles.textInput}
+                                name="password"
+                                autoCapitalize="none"
+                                secureTextEntry={true}
+                                value={password}
+                                onChangeText={(text) => setPassword(text)}
+                            />
+                            <View style={[styles.buttonContainerSignIn, styles.flexRow]}>
+                                <TouchableOpacity style={[styles.signInButton, styles.buttonLength, styles.blueBackground, styles.alignSelfCenter]}
+                                    onPress={handleLogin}
+                                >
+                                    <Text style={[styles.btnText, styles.alignSelfCenter]}>Sign In</Text>
+                                </TouchableOpacity>
 
-                    <Text style={styles.signInText}>Password</Text>
-                    <TextInput style={styles.textInput}
-                        name="password"
-                        autoCapitalize="none"
-                        secureTextEntry={true}
-                        value={password}
-                        onChangeText={(text) => setPassword(text)}
-                    />
-                    <View style={[styles.buttonContainerSignIn, styles.flexRow]}>
-                        <TouchableOpacity style={[styles.signInButton, styles.buttonLength, styles.blueBackground, styles.alignSelfCenter]}
-                            onPress={handleLogin}
-                        // onPress={() => navigation.navigate('Home')}
-                        >
-                            <Text style={[styles.btnText, styles.alignSelfCenter]}>Sign In</Text>
-                        </TouchableOpacity>
+                                <TouchableOpacity style={[styles.signInButton, styles.buttonLength, styles.blueBackground, styles.alignSelfCenter]}
+                                    onPress={handleSignUp}
+                                >
+                                    <Text style={[styles.btnText, styles.alignSelfCenter]}>Register</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity style={[styles.forgotPasswordBtn, styles.alignSelfCenter]}
+                                    onPress={() => { navigation.navigate('ForgotPassword') }}
+                                >
+                                    <Text style={[styles.forgotPasswordBtnText, styles.alignSelfCenter]}>Forgot Password?</Text>
+                                </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.signInButton, styles.buttonLength, styles.blueBackground, styles.alignSelfCenter]}
-                            onPress={handleSignUp}
-                        >
-                            <Text style={[styles.btnText, styles.alignSelfCenter]}>Register</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <TouchableOpacity style={[styles.forgotPasswordBtn, styles.alignSelfCenter]}
-                            onPress={() => { navigation.navigate('ForgotPassword') }}
-                        >
-                            <Text style={[styles.forgotPasswordBtnText, styles.alignSelfCenter]}>Forgot Password?</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={[styles.forgotPasswordBtn, styles.alignSelfCenter]}
-                            onPress={() => { navigation.navigate('Visitor') }}
-                        >
-                            <Text style={[styles.forgotPasswordBtnText, styles.alignSelfCenter]}>View As Guest</Text>
-                        </TouchableOpacity>
+                                <TouchableOpacity style={[styles.forgotPasswordBtn, styles.alignSelfCenter]}
+                                    onPress={() => { navigation.navigate('Visitor') }}
+                                >
+                                    <Text style={[styles.forgotPasswordBtnText, styles.alignSelfCenter]}>View As Guest</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
                 </View>
-            </View>
+
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView >
     )
 }
