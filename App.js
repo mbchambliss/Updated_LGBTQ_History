@@ -23,7 +23,7 @@ import { HomeStackScreen } from './HomeStackScreen';
 const AboutStack = createNativeStackNavigator();
 const AccountStack = createNativeStackNavigator();
 const ContactStack = createNativeStackNavigator();
-const HomeStack = createNativeStackNavigator();
+const DateSelectStack = createNativeStackNavigator();
 const ResourceStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -111,44 +111,34 @@ const ContactStackScreen = ({ navigation }) => (
     />
   </ContactStack.Navigator>
 );
-// const HomeStackScreen = ({ navigation }) => (
-//   <HomeStack.Navigator>
-//     <HomeStack.Screen
-//       name="HomeScreen"
-//       component={HomeScreen}
-//       options={({ navigation }) => ({
-//         headerTitle: () => (
-//           <Image
-//             style={{ width: 90, height: 90, marginTop: -15 }}
-//             source={require('./assets/updated_logo_no_background.png')}
-//           />
-//         ),
-//         headerLeft: () => (
-//           <AntIcon.Button
-//             name="plus"
-//             backgroundColor="#fcedfc"
-//             color="#398ff4"
-//             size={24}
-//             onPress={() =>
-//               navigation.openDrawer()} />
-//         ),
-//         headerRight: () => (
-//           <AntIcon.Button
-//             name="calendar"
-//             backgroundColor="#fcedfc"
-//             color="#398ff4"
-//             size={24}
-//           />
-//         ),
-//         headerStyle: {
-//           backgroundColor: '#fcedfc',
-//           height: 200
-//         },
-//         headerShadowVisible: false
-//       })}
-//     />
-//   </HomeStack.Navigator>
-// );
+const DateSelectStackScreen = ({ navigation }) => (
+  <DateSelectStack.Navigator>
+    <DateSelectStack.Screen name="ContactScreen"
+      component={DateSelectScreen}
+      options={({ navigation }) => ({
+        headerTitle: () => (
+          <Image
+            style={{ width: 90, height: 90, marginTop: -15 }}
+            source={require('./assets/updated_logo_no_background.png')}
+          />
+        ),
+        headerLeft: () => (
+          <AntIcon.Button
+            name="plus"
+            backgroundColor="#fcedfc"
+            color="#398ff4"
+            onPress={() =>
+              navigation.openDrawer()} />
+        ),
+        headerStyle: {
+          backgroundColor: '#fcedfc',
+          height: 200
+        },
+        headerShadowVisible: false
+      })}
+    />
+  </DateSelectStack.Navigator>
+);
 const ResourceStackScreen = ({ navigation }) => (
   <ResourceStack.Navigator>
     <ResourceStack.Screen name="ResourceScreen"
@@ -199,7 +189,7 @@ function LoggedIn({ navigation }) {
         )
       }}>
       <Drawer.Screen name="Events" component={HomeStackScreen} />
-      <Drawer.Screen name="Select A Date" component={DateSelectScreen} />
+      <Drawer.Screen name="Select A Date" component={DateSelectStackScreen} />
       <Drawer.Screen name="About" component={AboutStackScreen} />
       <Drawer.Screen name="Account" component={AccountStackScreen} />
       <Drawer.Screen name="Contact" component={ContactStackScreen} />
