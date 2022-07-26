@@ -190,84 +190,94 @@ export const DateSelectScreen = ({ navigation }) => {
                     start={{ x: 0.1, y: 0.1 }}
                     end={{ x: 0.1, y: 0.9 }}
                     style={[styles.about, styles.flexOne]}>
-                    <View style={[styles.about, { flex: 1, alignItems: 'center' }]}>
-                        <View style={{
-                            width: '80%', marginBottom: 30, display: 'flex', alignItems: 'center',
-                            padding: 10, borderColor: '#FF69B4', borderEndColor: '#000', borderLeftWidth: 4
-                        }}>
-                            <Text style={{ fontSize: 20 }}>To see Queer Moments from a particular day, enter numerical values for the month and day.</Text>
-                        </View>
-
-                        {invalidMonth &&
-                            <View style={[styles.dateWarning, styles.redButton]}>
-                                <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID MONTH</Text>
-                            </View>
-                        }
-
-                        {invalidDay &&
-                            <View style={[styles.dateWarning, styles.redButton]}>
-                                <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID DAY</Text>
-                            </View>
-                        }
+                    <View style={[styles.about, { alignItems: 'center' }]}>
+                        <Text style={styles.resourceTitle}>SELECT A DATE</Text>
 
                         <View style={{
-                            display: 'flex', flexDirection: 'row',
-                            justifyContent: 'center', width: '100%'
+                            width: '90%', marginTop: 30, marginBottom: 30, display: 'flex', alignItems: 'center',
+                            borderColor: '#FF69B4', borderWidth: 4, borderRadius: 10,
+                            backgroundColor: '#FFF', padding: 20
                         }}>
+                            <View style={{ marginBottom: 30 }}>
+                                <Text style={{ fontSize: 20 }}>To see Queer Moments from a particular day, enter the numerical values for the month and day.</Text>
+                            </View>
 
-                            <View style={{ display: 'flex', alignItems: 'center', marginRight: '25%' }}>
-                                <Text style={{ fontSize: 18 }}>Month</Text>
-                                <Text style={{ fontSize: 16 }}>1-12</Text>
+                            {invalidMonth &&
+                                <View style={[styles.dateWarning, styles.redButton]}>
+                                    <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID MONTH (1-12)</Text>
+                                </View>
+                            }
+
+                            {invalidDay &&
+                                <View style={[styles.dateWarning, styles.redButton]}>
+                                    <Text style={{ fontSize: 16, fontWeight: '700', color: '#CC0202' }}>PLEASE SELECT A VALID DAY</Text>
+                                </View>
+                            }
+
+                            <View style={{
+                                display: 'flex', flexDirection: 'row',
+                                width: '100%', marginTop: '4%',
+                                justifyContent: 'center'
+                            }}>
+                                <View style={{
+                                    display: 'flex', flexDirection: 'column', width: '30%'
+                                }}>
+                                    <View style={{ display: 'flex', alignItems: 'center', marginBottom: 5 }}>
+                                        <Text style={{ fontSize: 20, fontWeight: '600' }}>Month</Text>
+                                    </View>
+                                    <View style={{ display: 'flex', alignItems: 'center' }}>
+                                        <TextInput style={{
+                                            width: 100, height: 50,
+                                            borderRadius: 14, borderColor: '#1dacd6',
+                                            borderWidth: 4, backgroundColor: '#FFF'
+                                        }}
+                                            name="month"
+                                            keyboardType="number-pad"
+                                            textAlign="center"
+                                            maxLength={2}
+                                            fontSize={24}
+                                            value={month}
+                                            onChangeText={setMonth}
+                                        />
+                                    </View>
+                                </View>
+
+                                <View style={{ width: '20%' }}></View>
+
+                                <View style={{
+                                    display: 'flex', flexDirection: 'column'
+                                }}>
+                                    <View style={{ display: 'flex', alignItems: 'center', marginBottom: 5 }}>
+                                        <Text style={{ fontSize: 18, fontWeight: '600' }}>Day</Text>
+                                    </View>
+                                    <TextInput style={{
+                                        width: 100, height: 50,
+                                        borderRadius: 14, borderColor: '#1dacd6',
+                                        borderWidth: 4, backgroundColor: '#FFF'
+                                    }}
+                                        name="day"
+                                        keyboardType="number-pad"
+                                        textAlign="center"
+                                        maxLength={2}
+                                        fontSize={24}
+                                        value={day}
+                                        onChangeText={setDay}
+                                    />
+                                </View>
                             </View>
-                            <View style={{ display: 'flex', alignItems: 'center' }}>
-                                <Text style={{ fontSize: 18 }}>Day</Text>
-                                <Text style={{ fontSize: 16 }}>##</Text>
-                            </View>
+                            <View style={{ width: '100%', display: 'flex', marginTop: 30, flexDirection: 'row', justifyContent: 'center' }}>
+                                <TouchableOpacity style={[{ marginRight: 20 }, styles.signInButton, styles.buttonLength, styles.blueBackground]}
+                                    onPress={checkDateInput}
+                                >
+                                    <Text style={[styles.buttonText, styles.alignSelfCenter]}>Select</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.signInButton, styles.buttonLength, styles.blueBackground]}
+                                    onPress={() => navigation.goBack()}>
+                                    <Text style={[styles.buttonText, styles.alignSelfCenter]}>Dismiss</Text>
+                                </TouchableOpacity>
+                            </View >
                         </View>
-                        <View style={{
-                            display: 'flex', flexDirection: 'row',
-                            justifyContent: 'center', width: '100%',
-                            marginTop: '4%', alignItems: 'center'
-                        }}>
-                            <TextInput style={{
-                                width: 100, height: 50,
-                                borderRadius: 14, marginRight: '10%', borderColor: '#1dacd6',
-                                borderWidth: 4, backgroundColor: '#FFF'
-                            }}
-                                name="month"
-                                keyboardType="number-pad"
-                                textAlign="center"
-                                maxLength={2}
-                                fontSize={24}
-                                value={month}
-                                onChangeText={setMonth}
-                            />
-                            <TextInput style={{
-                                width: 100, height: 50,
-                                borderRadius: 14, borderColor: '#1dacd6',
-                                borderWidth: 4, backgroundColor: '#FFF'
-                            }}
-                                name="day"
-                                keyboardType="number-pad"
-                                textAlign="center"
-                                maxLength={2}
-                                fontSize={24}
-                                value={day}
-                                onChangeText={setDay}
-                            />
-                        </View>
-                        <View style={{ width: '100%', display: 'flex', marginTop: 30, flexDirection: 'row', justifyContent: 'center' }}>
-                            <TouchableOpacity style={[{ marginRight: 20 }, styles.signInButton, styles.buttonLength, styles.blueBackground]}
-                                onPress={checkDateInput}
-                            >
-                                <Text style={[styles.buttonText, styles.alignSelfCenter]}>Select</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[styles.signInButton, styles.buttonLength, styles.blueBackground]}
-                                onPress={() => navigation.goBack()}>
-                                <Text style={[styles.buttonText, styles.alignSelfCenter]}>Dismiss</Text>
-                            </TouchableOpacity>
-                        </View >
                     </View >
                 </LinearGradient>
             </View >

@@ -43,6 +43,7 @@ const AboutStackScreen = ({ navigation }) => (
             name="plus"
             backgroundColor="#fcedfc"
             color="#398ff4"
+            size={24}
             onPress={() =>
               navigation.openDrawer()} />
         ),
@@ -71,6 +72,7 @@ const AccountStackScreen = ({ navigation }) => (
             name="plus"
             backgroundColor="#fcedfc"
             color="#398ff4"
+            size={24}
             onPress={() =>
               navigation.openDrawer()} />
         ),
@@ -99,6 +101,7 @@ const ContactStackScreen = ({ navigation }) => (
             name="plus"
             backgroundColor="#fcedfc"
             color="#398ff4"
+            size={24}
             onPress={() =>
               navigation.openDrawer()} />
         ),
@@ -127,6 +130,7 @@ const DateSelectStackScreen = ({ navigation }) => (
             name="plus"
             backgroundColor="#fcedfc"
             color="#398ff4"
+            size={24}
             onPress={() =>
               navigation.openDrawer()} />
         ),
@@ -155,6 +159,7 @@ const ResourceStackScreen = ({ navigation }) => (
             name="plus"
             backgroundColor="#fcedfc"
             color="#398ff4"
+            size={24}
             onPress={() =>
               navigation.openDrawer()} />
         ),
